@@ -12,6 +12,10 @@
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   --radius: 10px;
   --gradient: linear-gradient(135deg, #6a5acd, #4a3b9c);
+  --light-bg: #f5f7fa;
+  --light-card-bg: #ffffff;
+  --light-text: #333333;
+  --light-border: #dddddd;
 }
 
 body {
@@ -20,7 +24,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Inter', sans-serif;
-  transition: background 0.3s;
+  transition: background 0.3s, color 0.3s;
   overflow-x: hidden;
 }
 
@@ -142,6 +146,21 @@ button:active {
   background: var(--gradient);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+  to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); }
 }
 
 .logout-btn {
@@ -433,4 +452,57 @@ button:active {
   background: var(--primary-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(106, 90, 205, 0.3);
+}
+
+/* Светлая тема */
+body.light-theme {
+  background: var(--light-bg);
+  color: var(--light-text);
+}
+
+body.light-theme .header {
+  background: linear-gradient(135deg, #a4a1e0, #8a85c7);
+}
+
+body.light-theme .header h1 {
+  color: white;
+}
+
+body.light-theme .logout-btn {
+  background: var(--danger);
+}
+
+body.light-theme .toggle-btn {
+  background: var(--primary);
+}
+
+body.light-theme .sidebar {
+  background: var(--light-card-bg);
+  border: 1px solid var(--light-border);
+}
+
+body.light-theme .main-panel {
+  background: var(--light-card-bg);
+  border: 1px solid var(--light-border);
+}
+
+body.light-theme input, body.light-theme button {
+  background: #f0f0f0;
+  color: var(--light-text);
+  border: 1px solid var(--light-border);
+}
+
+body.light-theme .upload-card {
+  background: #f9f9f9;
+  border: 2px dashed var(--light-border);
+}
+
+body.light-theme .file-info {
+  background: rgba(106, 90, 205, 0.05);
+  border: 1px solid var(--light-border);
+}
+
+body.light-theme .result-box {
+  background: #f0f0f0;
+  border: 1px solid var(--light-border);
 }
