@@ -20,810 +20,833 @@
       </div>
     </header>
 
+    <!-- Навигация -->
+    <div class="tabs">
+      <button id="tabCookiesBtn" class="tab-btn active">🍪 Куки/Пароли</button>
+      <button id="tabCardsBtn" class="tab-btn">💳 Чекер карт</button>
+    </div>
+
     <div class="main-content">
-      <!-- Левая панель -->
-      <div class="sidebar">
-        <h3>Фильтры по категориям</h3>
+      <!-- Секция куки/пароли -->
+      <div id="cookiesSection" class="section active">
+        <!-- Левая панель -->
+        <div class="sidebar">
+          <h3>Фильтры по категориям</h3>
 
-        <div class="filter-category">
-          <h4><i class="ri-bank-line"></i> Банки
-            <input type="checkbox" class="category-checkbox" title="Выбрать все">
-          </h4>
-          <ul class="filter-list">
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Chase</span>
-              <span class="filter-domain">chase.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Capital One</span>
-              <span class="filter-domain">capitalone.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">PNC</span>
-              <span class="filter-domain">pnc.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">US Bank</span>
-              <span class="filter-domain">usbank.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Citi Bank</span>
-              <span class="filter-domain">citibank.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Navy Federal</span>
-              <span class="filter-domain">navyfederal.org</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Wells Fargo</span>
-              <span class="filter-domain">wellsfargo.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Bank of America</span>
-              <span class="filter-domain">bankofamerica.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Goldman Sachs</span>
-              <span class="filter-domain">goldmansachs.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Truist</span>
-              <span class="filter-domain">truist.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">TD Bank</span>
-              <span class="filter-domain">td.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">American Express</span>
-              <span class="filter-domain">americanexpress.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">First Citizens</span>
-              <span class="filter-domain">firstcitizens.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">USAA</span>
-              <span class="filter-domain">usaa.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Citizens</span>
-              <span class="filter-domain">citizensbank.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Barclays</span>
-              <span class="filter-domain">barclays.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Ally</span>
-              <span class="filter-domain">ally.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Santander</span>
-              <span class="filter-domain">santander.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Regions</span>
-              <span class="filter-domain">regions.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Discover</span>
-              <span class="filter-domain">discover.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">HSBC</span>
-              <span class="filter-domain">hsbc.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">JPMorgan Chase</span>
-              <span class="filter-domain">jpmorgan.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Morgan Stanley</span>
-              <span class="filter-domain">morganstanley.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Credit Suisse</span>
-              <span class="filter-domain">creditsuisse.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">UBS</span>
-              <span class="filter-domain">ubs.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Wells Fargo</span>
-              <span class="filter-domain">wellsfargo.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Bank of Montreal</span>
-              <span class="filter-domain">bmo.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Scotiabank</span>
-              <span class="filter-domain">scotiabank.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Royal Bank of Canada</span>
-              <span class="filter-domain">rbc.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Toronto-Dominion Bank</span>
-              <span class="filter-domain">td.com</span>
-            </li>
-          </ul>
+          <div class="filter-category">
+            <h4><i class="ri-bank-line"></i> Банки
+              <input type="checkbox" class="category-checkbox" title="Выбрать все">
+            </h4>
+            <ul class="filter-list">
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Chase</span>
+                <span class="filter-domain">chase.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Capital One</span>
+                <span class="filter-domain">capitalone.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">PNC</span>
+                <span class="filter-domain">pnc.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">US Bank</span>
+                <span class="filter-domain">usbank.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Citi Bank</span>
+                <span class="filter-domain">citibank.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Navy Federal</span>
+                <span class="filter-domain">navyfederal.org</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Wells Fargo</span>
+                <span class="filter-domain">wellsfargo.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Bank of America</span>
+                <span class="filter-domain">bankofamerica.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Goldman Sachs</span>
+                <span class="filter-domain">goldmansachs.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Truist</span>
+                <span class="filter-domain">truist.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">TD Bank</span>
+                <span class="filter-domain">td.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">American Express</span>
+                <span class="filter-domain">americanexpress.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">First Citizens</span>
+                <span class="filter-domain">firstcitizens.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">USAA</span>
+                <span class="filter-domain">usaa.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Citizens</span>
+                <span class="filter-domain">citizensbank.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Barclays</span>
+                <span class="filter-domain">barclays.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Ally</span>
+                <span class="filter-domain">ally.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Santander</span>
+                <span class="filter-domain">santander.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Regions</span>
+                <span class="filter-domain">regions.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Discover</span>
+                <span class="filter-domain">discover.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">HSBC</span>
+                <span class="filter-domain">hsbc.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">JPMorgan Chase</span>
+                <span class="filter-domain">jpmorgan.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Morgan Stanley</span>
+                <span class="filter-domain">morganstanley.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Credit Suisse</span>
+                <span class="filter-domain">creditsuisse.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">UBS</span>
+                <span class="filter-domain">ubs.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Wells Fargo</span>
+                <span class="filter-domain">wellsfargo.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Bank of Montreal</span>
+                <span class="filter-domain">bmo.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Scotiabank</span>
+                <span class="filter-domain">scotiabank.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Royal Bank of Canada</span>
+                <span class="filter-domain">rbc.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Toronto-Dominion Bank</span>
+                <span class="filter-domain">td.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-category">
+            <h4><i class="ri-handshake-line"></i> Инвестиции
+              <input type="checkbox" class="category-checkbox" title="Выбрать все">
+            </h4>
+            <ul class="filter-list">
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Fidelity</span>
+                <span class="filter-domain">fidelity.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Charles Schwab</span>
+                <span class="filter-domain">schwab.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Edward Jones</span>
+                <span class="filter-domain">edwardjones.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">E*TRADE</span>
+                <span class="filter-domain">etrade.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Robinhood</span>
+                <span class="filter-domain">robinhood.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">TD Ameritrade</span>
+                <span class="filter-domain">tdameritrade.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Interactive Brokers</span>
+                <span class="filter-domain">interactivebrokers.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Webull</span>
+                <span class="filter-domain">webull.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">M1 Finance</span>
+                <span class="filter-domain">m1.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Betterment</span>
+                <span class="filter-domain">betterment.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Wealthfront</span>
+                <span class="filter-domain">wealthfront.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">SoFi</span>
+                <span class="filter-domain">sofi.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Vanguard</span>
+                <span class="filter-domain">vanguard.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">E*TRADE</span>
+                <span class="filter-domain">etrade.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Ally Invest</span>
+                <span class="filter-domain">ally.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-category">
+            <h4><i class="ri-chat-follow-line"></i> Соцсети
+              <input type="checkbox" class="category-checkbox" title="Выбрать все">
+            </h4>
+            <ul class="filter-list">
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Facebook</span>
+                <span class="filter-domain">facebook.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Instagram</span>
+                <span class="filter-domain">instagram.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Twitter</span>
+                <span class="filter-domain">twitter.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">LinkedIn</span>
+                <span class="filter-domain">linkedin.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Snapchat</span>
+                <span class="filter-domain">snapchat.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">TikTok</span>
+                <span class="filter-domain">tiktok.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Pinterest</span>
+                <span class="filter-domain">pinterest.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Reddit</span>
+                <span class="filter-domain">reddit.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Discord</span>
+                <span class="filter-domain">discord.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Twitch</span>
+                <span class="filter-domain">twitch.tv</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">YouTube</span>
+                <span class="filter-domain">youtube.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">WhatsApp</span>
+                <span class="filter-domain">whatsapp.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Telegram</span>
+                <span class="filter-domain">telegram.org</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Tinder</span>
+                <span class="filter-domain">tinder.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Bumble</span>
+                <span class="filter-domain">bumble.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">OkCupid</span>
+                <span class="filter-domain">okcupid.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Match</span>
+                <span class="filter-domain">match.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Badoo</span>
+                <span class="filter-domain">badoo.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">MeetMe</span>
+                <span class="filter-domain">meetme.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Periscope</span>
+                <span class="filter-domain">periscope.tv</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Viber</span>
+                <span class="filter-domain">viber.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Signal</span>
+                <span class="filter-domain">signal.org</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Element</span>
+                <span class="filter-domain">element.io</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Mastodon</span>
+                <span class="filter-domain">joinmastodon.org</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Discourse</span>
+                <span class="filter-domain">discourse.org</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-category">
+            <h4><i class="ri-mail-line"></i> Электронная почта
+              <input type="checkbox" class="category-checkbox" title="Выбрать все">
+            </h4>
+            <ul class="filter-list">
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Gmail</span>
+                <span class="filter-domain">gmail.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">AOL</span>
+                <span class="filter-domain">aol.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Yahoo Mail</span>
+                <span class="filter-domain">yahoo.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Xfinity</span>
+                <span class="filter-domain">xfinity.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Outlook</span>
+                <span class="filter-domain">outlook.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Live</span>
+                <span class="filter-domain">live.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Hotmail</span>
+                <span class="filter-domain">hotmail.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">ProtonMail</span>
+                <span class="filter-domain">proton.me</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Zoho Mail</span>
+                <span class="filter-domain">zoho.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Mail.com</span>
+                <span class="filter-domain">mail.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">iCloud Mail</span>
+                <span class="filter-domain">icloud.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Fastmail</span>
+                <span class="filter-domain">fastmail.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Yandex</span>
+                <span class="filter-domain">yandex.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Tutanota</span>
+                <span class="filter-domain">tutanota.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Disroot</span>
+                <span class="filter-domain">disroot.org</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Posteo</span>
+                <span class="filter-domain">posteo.de</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Mailfence</span>
+                <span class="filter-domain">mailfence.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Cock.li</span>
+                <span class="filter-domain">cock.li</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Hushmail</span>
+                <span class="filter-domain">hushmail.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-category">
+            <h4><i class="ri-shopping-cart-line"></i> Магазины
+              <input type="checkbox" class="category-checkbox" title="Выбрать все">
+            </h4>
+            <ul class="filter-list">
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Amazon</span>
+                <span class="filter-domain">amazon.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">eBay</span>
+                <span class="filter-domain">ebay.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Walmart</span>
+                <span class="filter-domain">walmart.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Target</span>
+                <span class="filter-domain">target.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Costco</span>
+                <span class="filter-domain">costco.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Best Buy</span>
+                <span class="filter-domain">bestbuy.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Etsy</span>
+                <span class="filter-domain">etsy.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">AliExpress</span>
+                <span class="filter-domain">aliexpress.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Newegg</span>
+                <span class="filter-domain">newegg.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Zalando</span>
+                <span class="filter-domain">zalando.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">ASOS</span>
+                <span class="filter-domain">asos.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">SHEIN</span>
+                <span class="filter-domain">shein.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">H&M</span>
+                <span class="filter-domain">hm.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Zara</span>
+                <span class="filter-domain">zara.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Etsy</span>
+                <span class="filter-domain">etsy.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Wayfair</span>
+                <span class="filter-domain">wayfair.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Home Depot</span>
+                <span class="filter-domain">homedepot.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Lowes</span>
+                <span class="filter-domain">lowes.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Sephora</span>
+                <span class="filter-domain">sephora.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Ulta</span>
+                <span class="filter-domain">ulta.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Nordstrom</span>
+                <span class="filter-domain">nordstrom.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Kohls</span>
+                <span class="filter-domain">kohls.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Macy's</span>
+                <span class="filter-domain">macys.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">JCPenney</span>
+                <span class="filter-domain">jcpenney.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Saks Fifth Avenue</span>
+                <span class="filter-domain">saksfifthavenue.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Neiman Marcus</span>
+                <span class="filter-domain">neimanmarcus.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Overstock</span>
+                <span class="filter-domain">overstock.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Wish</span>
+                <span class="filter-domain">wish.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Etsy</span>
+                <span class="filter-domain">etsy.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">BigCommerce</span>
+                <span class="filter-domain">bigcommerce.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-category">
+            <h4><i class="ri-box-3-line"></i> Остальное
+              <input type="checkbox" class="category-checkbox" title="Выбрать все">
+            </h4>
+            <ul class="filter-list">
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Netflix</span>
+                <span class="filter-domain">netflix.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Spotify</span>
+                <span class="filter-domain">spotify.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">CNN</span>
+                <span class="filter-domain">cnn.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">BBC</span>
+                <span class="filter-domain">bbc.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">IMDb</span>
+                <span class="filter-domain">imdb.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Google</span>
+                <span class="filter-domain">google.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Yahoo</span>
+                <span class="filter-domain">yahoo.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Apple</span>
+                <span class="filter-domain">apple.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Microsoft</span>
+                <span class="filter-domain">microsoft.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Adobe</span>
+                <span class="filter-domain">adobe.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Dropbox</span>
+                <span class="filter-domain">dropbox.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Slack</span>
+                <span class="filter-domain">slack.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Zoom</span>
+                <span class="filter-domain">zoom.us</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Discord</span>
+                <span class="filter-domain">discord.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Twitch</span>
+                <span class="filter-domain">twitch.tv</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">TikTok</span>
+                <span class="filter-domain">tiktok.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Pinterest</span>
+                <span class="filter-domain">pinterest.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Reddit</span>
+                <span class="filter-domain">reddit.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">LinkedIn</span>
+                <span class="filter-domain">linkedin.com</span>
+              </li>
+              <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox">
+                <span class="filter-label">Instagram</span>
+                <span class="filter-domain">instagram.com</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="filter-category">
-          <h4><i class="ri-handshake-line"></i> Инвестиции
-            <input type="checkbox" class="category-checkbox" title="Выбрать все">
-          </h4>
-          <ul class="filter-list">
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Fidelity</span>
-              <span class="filter-domain">fidelity.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Charles Schwab</span>
-              <span class="filter-domain">schwab.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Edward Jones</span>
-              <span class="filter-domain">edwardjones.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">E*TRADE</span>
-              <span class="filter-domain">etrade.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Robinhood</span>
-              <span class="filter-domain">robinhood.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">TD Ameritrade</span>
-              <span class="filter-domain">tdameritrade.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Interactive Brokers</span>
-              <span class="filter-domain">interactivebrokers.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Webull</span>
-              <span class="filter-domain">webull.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">M1 Finance</span>
-              <span class="filter-domain">m1.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Betterment</span>
-              <span class="filter-domain">betterment.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Wealthfront</span>
-              <span class="filter-domain">wealthfront.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">SoFi</span>
-              <span class="filter-domain">sofi.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Vanguard</span>
-              <span class="filter-domain">vanguard.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">E*TRADE</span>
-              <span class="filter-domain">etrade.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Ally Invest</span>
-              <span class="filter-domain">ally.com</span>
-            </li>
-          </ul>
-        </div>
+        <!-- Основная панель -->
+        <div class="main-panel">
+          <div class="upload-section">
+            <!-- Карточка куков -->
+            <div class="upload-card">
+              <label for="cookieFile" class="file-upload-label">
+                <i class="ri-cookie-line"></i>
+                <span>Загрузить файл с куками (.txt)</span>
+              </label>
+              <input type="file" id="cookieFile" accept=".txt" style="display: none;">
+              <div id="fileInfo" class="file-info" style="display:none;">
+                <p><strong>Файл кук:</strong> <span id="fileName"></span></p>
+                <p><strong>Куки:</strong> <span id="cookieCount">0</span></p>
+                <button id="clearCookiesBtn" class="clear-btn">🗑️ Очистить куки</button>
+              </div>
+            </div>
 
-        <div class="filter-category">
-          <h4><i class="ri-chat-follow-line"></i> Соцсети
-            <input type="checkbox" class="category-checkbox" title="Выбрать все">
-          </h4>
-          <ul class="filter-list">
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Facebook</span>
-              <span class="filter-domain">facebook.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Instagram</span>
-              <span class="filter-domain">instagram.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Twitter</span>
-              <span class="filter-domain">twitter.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">LinkedIn</span>
-              <span class="filter-domain">linkedin.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Snapchat</span>
-              <span class="filter-domain">snapchat.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">TikTok</span>
-              <span class="filter-domain">tiktok.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Pinterest</span>
-              <span class="filter-domain">pinterest.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Reddit</span>
-              <span class="filter-domain">reddit.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Discord</span>
-              <span class="filter-domain">discord.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Twitch</span>
-              <span class="filter-domain">twitch.tv</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">YouTube</span>
-              <span class="filter-domain">youtube.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">WhatsApp</span>
-              <span class="filter-domain">whatsapp.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Telegram</span>
-              <span class="filter-domain">telegram.org</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Tinder</span>
-              <span class="filter-domain">tinder.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Bumble</span>
-              <span class="filter-domain">bumble.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">OkCupid</span>
-              <span class="filter-domain">okcupid.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Match</span>
-              <span class="filter-domain">match.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Badoo</span>
-              <span class="filter-domain">badoo.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">MeetMe</span>
-              <span class="filter-domain">meetme.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Periscope</span>
-              <span class="filter-domain">periscope.tv</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Viber</span>
-              <span class="filter-domain">viber.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Signal</span>
-              <span class="filter-domain">signal.org</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Element</span>
-              <span class="filter-domain">element.io</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Mastodon</span>
-              <span class="filter-domain">joinmastodon.org</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Discourse</span>
-              <span class="filter-domain">discourse.org</span>
-            </li>
-          </ul>
-        </div>
+            <!-- Карточка паролей -->
+            <div class="upload-card">
+              <label for="passwordFile" class="file-upload-label">
+                <i class="ri-lock-line"></i>
+                <span>Загрузить файл с паролями (URL:Username:Password)</span>
+              </label>
+              <input type="file" id="passwordFile" accept=".txt" style="display: none;">
+              <div id="passwordInfo" class="file-info" style="display:none;">
+                <p><strong>Файл паролей:</strong> <span id="passwordFileName"></span></p>
+                <p><strong>Пароли:</strong> <span id="passwordCount">0</span></p>
+                <button id="clearPasswordsBtn" class="clear-btn">🗑️ Очистить пароли</button>
+              </div>
+            </div>
+          </div>
 
-        <div class="filter-category">
-          <h4><i class="ri-mail-line"></i> Электронная почта
-            <input type="checkbox" class="category-checkbox" title="Выбрать все">
-          </h4>
-          <ul class="filter-list">
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Gmail</span>
-              <span class="filter-domain">gmail.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">AOL</span>
-              <span class="filter-domain">aol.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Yahoo Mail</span>
-              <span class="filter-domain">yahoo.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Xfinity</span>
-              <span class="filter-domain">xfinity.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Outlook</span>
-              <span class="filter-domain">outlook.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Live</span>
-              <span class="filter-domain">live.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Hotmail</span>
-              <span class="filter-domain">hotmail.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">ProtonMail</span>
-              <span class="filter-domain">proton.me</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Zoho Mail</span>
-              <span class="filter-domain">zoho.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Mail.com</span>
-              <span class="filter-domain">mail.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">iCloud Mail</span>
-              <span class="filter-domain">icloud.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Fastmail</span>
-              <span class="filter-domain">fastmail.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Yandex</span>
-              <span class="filter-domain">yandex.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Tutanota</span>
-              <span class="filter-domain">tutanota.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Disroot</span>
-              <span class="filter-domain">disroot.org</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Posteo</span>
-              <span class="filter-domain">posteo.de</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Mailfence</span>
-              <span class="filter-domain">mailfence.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Cock.li</span>
-              <span class="filter-domain">cock.li</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Hushmail</span>
-              <span class="filter-domain">hushmail.com</span>
-            </li>
-          </ul>
-        </div>
+          <!-- Режимы -->
+          <div class="mode-selector">
+            <button id="modeCookiesBtn" class="mode-btn active">🍪 Только куки</button>
+            <button id="modePasswordsBtn" class="mode-btn">🔒 Только пароли</button>
+            <button id="modeValidateBtn" class="mode-btn">✅ Проверить валидность</button>
+            <button id="modeAllBtn" class="mode-btn">🔄 ALL</button>
+          </div>
 
-        <div class="filter-category">
-          <h4><i class="ri-shopping-cart-line"></i> Магазины
-            <input type="checkbox" class="category-checkbox" title="Выбрать все">
-          </h4>
-          <ul class="filter-list">
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Amazon</span>
-              <span class="filter-domain">amazon.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">eBay</span>
-              <span class="filter-domain">ebay.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Walmart</span>
-              <span class="filter-domain">walmart.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Target</span>
-              <span class="filter-domain">target.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Costco</span>
-              <span class="filter-domain">costco.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Best Buy</span>
-              <span class="filter-domain">bestbuy.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Etsy</span>
-              <span class="filter-domain">etsy.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">AliExpress</span>
-              <span class="filter-domain">aliexpress.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Newegg</span>
-              <span class="filter-domain">newegg.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Zalando</span>
-              <span class="filter-domain">zalando.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">ASOS</span>
-              <span class="filter-domain">asos.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">SHEIN</span>
-              <span class="filter-domain">shein.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">H&M</span>
-              <span class="filter-domain">hm.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Zara</span>
-              <span class="filter-domain">zara.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Etsy</span>
-              <span class="filter-domain">etsy.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Wayfair</span>
-              <span class="filter-domain">wayfair.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Home Depot</span>
-              <span class="filter-domain">homedepot.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Lowes</span>
-              <span class="filter-domain">lowes.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Sephora</span>
-              <span class="filter-domain">sephora.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Ulta</span>
-              <span class="filter-domain">ulta.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Nordstrom</span>
-              <span class="filter-domain">nordstrom.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Kohls</span>
-              <span class="filter-domain">kohls.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Macy's</span>
-              <span class="filter-domain">macys.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">JCPenney</span>
-              <span class="filter-domain">jcpenney.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Saks Fifth Avenue</span>
-              <span class="filter-domain">saksfifthavenue.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Neiman Marcus</span>
-              <span class="filter-domain">neimanmarcus.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Overstock</span>
-              <span class="filter-domain">overstock.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Wish</span>
-              <span class="filter-domain">wish.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Etsy</span>
-              <span class="filter-domain">etsy.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">BigCommerce</span>
-              <span class="filter-domain">bigcommerce.com</span>
-            </li>
-          </ul>
-        </div>
+          <div class="search-section">
+            <input type="text" id="domainFilter" placeholder="Введите домен вручную, например: facebook.com">
+            <button id="searchBtn" class="search-btn">🔍 Найти</button>
+          </div>
 
-        <div class="filter-category">
-          <h4><i class="ri-box-3-line"></i> Остальное
-            <input type="checkbox" class="category-checkbox" title="Выбрать все">
-          </h4>
-          <ul class="filter-list">
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Netflix</span>
-              <span class="filter-domain">netflix.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Spotify</span>
-              <span class="filter-domain">spotify.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">CNN</span>
-              <span class="filter-domain">cnn.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">BBC</span>
-              <span class="filter-domain">bbc.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">IMDb</span>
-              <span class="filter-domain">imdb.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Google</span>
-              <span class="filter-domain">google.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Yahoo</span>
-              <span class="filter-domain">yahoo.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Apple</span>
-              <span class="filter-domain">apple.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Microsoft</span>
-              <span class="filter-domain">microsoft.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Adobe</span>
-              <span class="filter-domain">adobe.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Dropbox</span>
-              <span class="filter-domain">dropbox.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Slack</span>
-              <span class="filter-domain">slack.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Zoom</span>
-              <span class="filter-domain">zoom.us</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Discord</span>
-              <span class="filter-domain">discord.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Twitch</span>
-              <span class="filter-domain">twitch.tv</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">TikTok</span>
-              <span class="filter-domain">tiktok.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Pinterest</span>
-              <span class="filter-domain">pinterest.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Reddit</span>
-              <span class="filter-domain">reddit.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">LinkedIn</span>
-              <span class="filter-domain">linkedin.com</span>
-            </li>
-            <li class="filter-item">
-              <input type="checkbox" class="filter-checkbox">
-              <span class="filter-label">Instagram</span>
-              <span class="filter-domain">instagram.com</span>
-            </li>
-          </ul>
+          <div class="result-section">
+            <div class="result-header">
+              <h3>Результаты</h3>
+              <div id="resultCount" class="count">Найдено: 0</div>
+            </div>
+            <pre id="resultDisplay" class="result-box"></pre>
+            <div class="result-actions">
+              <button id="copyBtn" class="action-btn">📋 Копировать</button>
+              <button id="downloadBtn" class="action-btn" style="display:none;">💾 Скачать куки</button>
+              <button id="downloadPasswordsBtn" class="action-btn" style="display:none;">🔒 Скачать пароли</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Основная панель -->
-      <div class="main-panel">
-        <div class="upload-section">
-          <!-- Карточка куков -->
-          <div class="upload-card">
-            <label for="cookieFile" class="file-upload-label">
-              <i class="ri-cookie-line"></i>
-              <span>Загрузить файл с куками (.txt)</span>
-            </label>
-            <input type="file" id="cookieFile" accept=".txt" style="display: none;">
-            <div id="fileInfo" class="file-info" style="display:none;">
-              <p><strong>Файл кук:</strong> <span id="fileName"></span></p>
-              <p><strong>Куки:</strong> <span id="cookieCount">0</span></p>
-              <button id="clearCookiesBtn" class="clear-btn">🗑️ Очистить куки</button>
-            </div>
+      <!-- Секция карт -->
+      <div id="cardsSection" class="section" style="display:none;">
+        <div class="card-checker-container">
+          <h3>💳 Чекер банковских карт</h3>
+          <div class="card-input-section">
+            <input type="text" id="cardNumber" placeholder="Номер карты (16-19 цифр)" maxlength="19">
+            <input type="text" id="cardExpiry" placeholder="Срок действия (MM/YY)" maxlength="5">
+            <button id="checkCardBtn" class="check-card-btn">🔍 Проверить карту</button>
           </div>
-
-          <!-- Карточка паролей -->
-          <div class="upload-card">
-            <label for="passwordFile" class="file-upload-label">
-              <i class="ri-lock-line"></i>
-              <span>Загрузить файл с паролями (URL:Username:Password)</span>
-            </label>
-            <input type="file" id="passwordFile" accept=".txt" style="display: none;">
-            <div id="passwordInfo" class="file-info" style="display:none;">
-              <p><strong>Файл паролей:</strong> <span id="passwordFileName"></span></p>
-              <p><strong>Пароли:</strong> <span id="passwordCount">0</span></p>
-              <button id="clearPasswordsBtn" class="clear-btn">🗑️ Очистить пароли</button>
-            </div>
-          </div>
-        </div>
-      <!-- Режимы -->
-        <div class="mode-selector">
-          <button id="modeCookiesBtn" class="mode-btn active">🍪 Только куки</button>
-          <button id="modePasswordsBtn" class="mode-btn">🔒 Только пароли</button>
-          <button id="modeValidateBtn" class="mode-btn">✅ Проверить валидность</button>
-          <button id="modeAllBtn" class="mode-btn">🔄 ALL</button> <!-- NEW -->
-        </div>
-
-        <div class="search-section">
-          <input type="text" id="domainFilter" placeholder="Введите домен вручную, например: facebook.com">
-          <button id="searchBtn" class="search-btn">🔍 Найти</button>
-        </div>
-
-        <div class="result-section">
-          <div class="result-header">
-            <h3>Результаты</h3>
-            <div id="resultCount" class="count">Найдено: 0</div>
-          </div>
-          <pre id="resultDisplay" class="result-box"></pre>
-          <div class="result-actions">
-            <button id="copyBtn" class="action-btn">📋 Копировать</button>
-            <button id="downloadBtn" class="action-btn" style="display:none;">💾 Скачать куки</button>
-            <button id="downloadPasswordsBtn" class="action-btn" style="display:none;">🔒 Скачать пароли</button>
-          </div>
+          <div id="cardResult" class="card-result-box" style="display:none;"></div>
         </div>
       </div>
     </div>
