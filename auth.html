@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookie Checker — Авторизация</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+  <!-- Анимированные печеньки -->
+  <div class="cookie-bg"></div>
+
+  <div class="auth-container">
+    <h1>Cookie Checker 🔐</h1>
+    <form id="authForm">
+      <input type="text" id="username" placeholder="Введите ник" required>
+      <input type="password" id="password" placeholder="Введите пароль" required>
+      <button type="submit" class="submit-btn">Войти</button>
+    </form>
+    <form id="pinForm" style="display:none;">
+      <input type="number" id="pin" placeholder="Введите 6-значный PIN" required min="0" max="999999">
+      <button type="submit" class="submit-btn">Подтвердить</button>
+    </form>
+    <div id="error" class="error-message" style="display:none;"></div>
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>
