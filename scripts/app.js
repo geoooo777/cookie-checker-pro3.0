@@ -691,6 +691,108 @@ if (window.location.pathname.includes('dashboard.html')) {
       '510010': 'Bank of America',
       '520002': 'US Bank',
       '547301': 'TD Bank',
+
+      // Добавь новые BIN-ы
+      '478200': 'Bank of America', // Пример
+      '478201': 'Chase', // Пример
+      '478202': 'Citi', // Пример
+      '478203': 'Wells Fargo', // Пример
+      '478204': 'US Bank', // Пример
+      '478205': 'TD Bank', // Пример
+      '478206': 'Barclays', // Пример
+      '478207': 'HSBC', // Пример
+      '478208': 'Discover', // Пример
+      '478209': 'Santander', // Пример
+      '478210': 'Ally', // Пример
+      '478211': 'Sberbank', // Пример
+      '478212': 'Tinkoff', // Пример
+      '478213': 'Raiffeisen', // Пример
+      '478214': 'VTB', // Пример
+      '478215': 'Gazprombank', // Пример
+      '478216': 'Rosbank', // Пример
+      '478217': 'Promsvyazbank', // Пример
+      '478218': 'Credit Europe Bank', // Пример
+      '478219': 'Home Credit Bank', // Пример
+      '478220': 'OTP Bank', // Пример
+      '478221': 'Renaissance Capital', // Пример
+      '478222': 'Sovcombank', // Пример
+      '478223': 'Alpha Bank', // Пример
+      '478224': 'Unistream', // Пример
+      '478225': 'QIWI Bank', // Пример
+      '478226': 'Tinkoff Bank', // Пример
+      '478227': 'Raiffeisenbank', // Пример
+      '478228': 'RosEvroBank', // Пример
+      '478229': 'Binbank', // Пример
+      '478230': 'MKB', // Пример
+      '478231': 'Rusfinance Bank', // Пример
+      '478232': 'Mortgage Bank', // Пример
+      '478233': 'TransCapital Bank', // Пример
+      '478234': 'Svyaznoy Bank', // Пример
+      '478235': 'Russian Standard Bank', // Пример
+      '478236': 'Home Credit Bank', // Пример
+      '478237': 'OTP Bank', // Пример
+      '478238': 'Sberbank', // Пример
+      '478239': 'VTB', // Пример
+      '478240': 'Gazprombank', // Пример
+      '478241': 'Raiffeisenbank', // Пример
+      '478242': 'Alfa-Bank', // Пример
+      '478243': 'Tinkoff', // Пример
+      '478244': 'Sovcombank', // Пример
+      '478245': 'Promsvyazbank', // Пример
+      '478246': 'Chase', // Пример
+      '478247': 'Citi', // Пример
+      '478248': 'Wells Fargo', // Пример
+      '478249': 'US Bank', // Пример
+      '478250': 'TD Bank', // Пример
+      '478251': 'Barclays', // Пример
+      '478252': 'HSBC', // Пример
+      '478253': 'Discover', // Пример
+      '478254': 'Santander', // Пример
+      '478255': 'Ally', // Пример
+      '478256': 'Sberbank', // Пример
+      '478257': 'Tinkoff', // Пример
+      '478258': 'Raiffeisen', // Пример
+      '478259': 'VTB', // Пример
+      '478260': 'Gazprombank', // Пример
+      '478261': 'Rosbank', // Пример
+      '478262': 'Promsvyazbank', // Пример
+      '478263': 'Credit Europe Bank', // Пример
+      '478264': 'Home Credit Bank', // Пример
+      '478265': 'OTP Bank', // Пример
+      '478266': 'Renaissance Capital', // Пример
+      '478267': 'Sovcombank', // Пример
+      '478268': 'Alpha Bank', // Пример
+      '478269': 'Unistream', // Пример
+      '478270': 'QIWI Bank', // Пример
+      '478271': 'Tinkoff Bank', // Пример
+      '478272': 'Raiffeisenbank', // Пример
+      '478273': 'RosEvroBank', // Пример
+      '478274': 'Binbank', // Пример
+      '478275': 'MKB', // Пример
+      '478276': 'Rusfinance Bank', // Пример
+      '478277': 'Mortgage Bank', // Пример
+      '478278': 'TransCapital Bank', // Пример
+      '478279': 'Svyaznoy Bank', // Пример
+      '478280': 'Russian Standard Bank', // Пример
+      '478281': 'Home Credit Bank', // Пример
+      '478282': 'American Express Test', // Пример
+      '478283': 'Chase', // Пример
+      '478284': 'Citi', // Пример
+      '478285': 'Wells Fargo', // Пример
+      '478286': 'US Bank', // Пример
+      '478287': 'TD Bank', // Пример
+      '478288': 'Barclays', // Пример
+      '478289': 'HSBC', // Пример
+      '478290': 'Discover', // Пример
+      '478291': 'Santander', // Пример
+      '478292': 'Ally', // Пример
+      '478293': 'Sberbank', // Пример
+      '478294': 'Tinkoff', // Пример
+      '478295': 'Raiffeisen', // Пример
+      '478296': 'VTB', // Пример
+      '478297': 'Gazprombank', // Пример
+      '478298': 'Rosbank', // Пример
+      '478299': 'Promsvyazbank', // Пример
     };
     return banks[bin] || 'Неизвестный';
   }
