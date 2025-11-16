@@ -9,17 +9,6 @@ const users = [
   { username: 'user4', password: '123456', pin: 567890 }
 ];
 
-// Проверка авторизации
-if (!localStorage.getItem('isLoggedIn')) {
-  if (!window.location.pathname.includes('auth.html')) {
-    window.location.href = 'auth.html';
-  }
-} else {
-  if (window.location.pathname.includes('auth.html')) {
-    window.location.href = 'dashboard.html';
-  }
-}
-
 // Состояние
 let cookies = [];
 let passwords = [];
@@ -57,7 +46,19 @@ const filterItems = document.querySelectorAll('.filter-item');
 const modeCookiesBtn = document.getElementById('modeCookiesBtn');
 const modePasswordsBtn = document.getElementById('modePasswordsBtn');
 const modeValidateBtn = document.getElementById('modeValidateBtn');
-const modeAllBtn = document.getElementById('modeAllBtn'); // NEW
+const modeAllBtn = document.getElementById('modeAllBtn');
+
+// Вкладки
+const tabCookiesBtn = document.getElementById('tabCookiesBtn');
+const tabCardsBtn = document.getElementById('tabCardsBtn');
+const cookiesSection = document.getElementById('cookiesSection');
+const cardsSection = document.getElementById('cardsSection');
+
+// Чекер карт
+const cardNumberInput = document.getElementById('cardNumber');
+const cardExpiryInput = document.getElementById('cardExpiry');
+const checkCardBtn = document.getElementById('checkCardBtn');
+const cardResult = document.getElementById('cardResult');
 
 // На странице авторизации
 if (window.location.pathname.includes('auth.html')) {
@@ -113,7 +114,22 @@ if (window.location.pathname.includes('dashboard.html')) {
     document.body.classList.add('light-theme');
   }
 
-  // 2. Режимы
+  // 2. Вкладки
+  tabCookiesBtn.onclick = () => {
+    cookiesSection.classList.add('active');
+    cardsSection.classList.remove('active');
+    tabCookiesBtn.classList.add('active');
+    tabCardsBtn.classList.remove('active');
+  };
+
+  tabCardsBtn.onclick = () => {
+    cardsSection.classList.add('active');
+    cookiesSection.classList.remove('active');
+    tabCardsBtn.classList.add('active');
+    tabCookiesBtn.classList.remove('active');
+  };
+
+  // 3. Режимы (только для куки/паролей)
   modeCookiesBtn.onclick = () => {
     currentMode = 'cookies';
     setActiveModeButton(modeCookiesBtn);
@@ -132,7 +148,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     validateCredentials();
   };
 
-  modeAllBtn.onclick = () => { // NEW
+  modeAllBtn.onclick = () => {
     currentMode = 'all';
     setActiveModeButton(modeAllBtn);
     updateFilters();
@@ -143,7 +159,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     activeBtn.classList.add('active');
   }
 
-  // 3. Загрузка куков
+  // 4. Загрузка куков
   cookieFile.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -162,7 +178,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     reader.readAsText(file);
   };
 
-  // 4. Загрузка паролей
+  // 5. Загрузка паролей
   passwordFile.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -181,7 +197,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     reader.readAsText(file);
   };
 
-  // 5. Парсинг куков
+  // 6. Парсинг куков
   function parseCookies(text) {
     return text.split('\n')
       .filter(line => !line.startsWith('#') && line.trim() !== '')
@@ -191,7 +207,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       });
   }
 
-  // 6. Парсинг паролей
+  // 7. Парсинг паролей
   function parsePasswords(text) {
     const entries = text.split('===============');
     const parsed = [];
@@ -231,7 +247,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return parsed;
   }
 
-  // 7. Очистка куков
+  // 8. Очистка куков
   clearCookiesBtn.onclick = () => {
     cookies = [];
     filteredCookies = [];
@@ -251,7 +267,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     alert('Куки очищены');
   };
 
-  // 8. Очистка паролей
+  // 9. Очистка паролей
   clearPasswordsBtn.onclick = () => {
     passwords = [];
     filteredPasswords = [];
@@ -271,7 +287,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     alert('Пароли очищены');
   };
 
-  // 9. Валидация кук и паролей
+  // 10. Валидация кук и паролей
   function validateCredentials() {
     if (cookies.length === 0 || passwords.length === 0) {
       resultDisplay.textContent = 'Для проверки валидности нужно загрузить и куки, и пароли.';
@@ -300,7 +316,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     downloadPasswordsBtn.style.display = 'none';
   }
 
-  // 10. Формат валидных куки/паролей
+  // 11. Формат валидных куки/паролей
   function formatValidatedCredentials(credentials) {
     let output = '';
     credentials.forEach(c => {
@@ -312,7 +328,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 11. Фильтрация по нескольким доменам
+  // 12. Фильтрация по нескольким доменам
   function filterByDomains(domains) {
     filteredCookies = cookies.filter(c => domains.some(d => c.domain.includes(d)));
     filteredPasswords = passwords.filter(p => domains.some(d => p.domain.includes(d)));
@@ -337,7 +353,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 12. Формат результатов (куки + пароли)
+  // 13. Формат результатов (куки + пароли)
   function formatResults(cookies, passwords) {
     let output = '';
 
@@ -369,7 +385,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 13. Формат только паролей
+  // 14. Формат только паролей
   function formatPasswords(passwords) {
     let output = '';
     passwords.forEach(p => {
@@ -382,7 +398,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 14. Обработчики фильтров
+  // 15. Обработчики фильтров
   filterItems.forEach((item, index) => {
     item.onclick = () => {
       const checkbox = filterCheckboxes[index];
@@ -447,20 +463,20 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 15. Ручной поиск
+  // 16. Ручной поиск
   searchBtn.onclick = () => {
     const domain = domainFilter.value.trim();
     if (!domain) return;
     filterByDomains([domain]);
   };
 
-  // 16. Копирование
+  // 17. Копирование
   copyBtn.onclick = () => {
     navigator.clipboard.writeText(resultDisplay.textContent);
     alert('Скопировано в буфер обмена');
   };
 
-  // 17. Скачивание куков
+  // 18. Скачивание куков
   downloadBtn.onclick = () => {
     const content = formatCookiesByDomain(filteredCookies);
     const blob = new Blob([content], { type: 'text/plain' });
@@ -472,7 +488,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 18. Скачивание паролей
+  // 19. Скачивание паролей
   downloadPasswordsBtn.onclick = () => {
     let content = '';
     filteredPasswords.forEach(p => {
@@ -491,7 +507,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 19. Формат куков по доменам
+  // 20. Формат куков по доменам
   function formatCookiesByDomain(cookies) {
     const grouped = {};
     cookies.forEach(c => {
@@ -508,17 +524,361 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 20. Тема
+  // 21. Тема
   themeToggle.onclick = () => {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   };
 
-  // 21. Выход
+  // 22. Выход
   logoutBtn.onclick = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
     window.location.href = 'auth.html';
   };
+
+  // 23. Чекер карт
+  checkCardBtn.onclick = () => {
+    const number = cardNumberInput.value.replace(/\s/g, '');
+    const expiry = cardExpiryInput.value;
+
+    if (!number || !expiry) {
+      cardResult.textContent = 'Введите номер карты и срок действия.';
+      cardResult.style.display = 'block';
+      return;
+    }
+
+    const result = analyzeCard(number, expiry);
+    cardResult.textContent = result;
+    cardResult.style.display = 'block';
+  };
+
+  function analyzeCard(number, expiry) {
+    let output = '';
+
+    // Валидация номера (алгоритм Луна)
+    if (!luhnValidate(number)) {
+      output += '❌ Номер карты: НЕВАЛИДЕН (ошибка в формате/цифрах)\n';
+    } else {
+      output += '✅ Номер карты: ВАЛИДЕН\n';
+    }
+
+    // Определение типа карты
+    const cardType = getCardType(number);
+    output += `💳 Тип карты: ${cardType}\n`;
+
+    // Определение BIN
+    const bin = number.substring(0, 6);
+    output += `🔢 BIN: ${bin}\n`;
+
+    // Определение банка (упрощённо)
+    const bank = getBankByBin(bin);
+    output += `🏦 Банк: ${bank}\n`;
+
+    // Определение страны (упрощённо)
+    const country = getCountryByBin(bin);
+    output += `🌍 Страна: ${country}\n`;
+
+    // Определение типа (кредит/дебет)
+    const cardSubType = getCardSubType(bin);
+    output += `💳 Подтип: ${cardSubType}\n`;
+
+    // Определение класса карты (упрощённо)
+    const cardClass = getCardClass(bin, cardType);
+    output += `🏷️ Класс: ${cardClass}\n`;
+
+    // Проверка срока действия
+    const [expMonth, expYear] = expiry.split('/');
+    const now = new Date();
+    const currentYear = now.getFullYear() % 100;
+    const currentMonth = now.getMonth() + 1;
+
+    if (parseInt(expYear) < currentYear || (parseInt(expYear) === currentYear && parseInt(expMonth) < currentMonth)) {
+      output += `⏰ Срок действия: ПРОСРОЧЕН\n`;
+    } else {
+      output += `⏰ Срок действия: АКТУАЛЕН\n`;
+    }
+
+    return output;
+  }
+
+  function luhnValidate(cardNumber) {
+    let sum = 0;
+    let isEven = false;
+    for (let i = cardNumber.length - 1; i >= 0; i--) {
+      let digit = parseInt(cardNumber.charAt(i));
+      if (isEven) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      sum += digit;
+      isEven = !isEven;
+    }
+    return sum % 10 === 0;
+  }
+
+  function getCardType(number) {
+    if (/^4/.test(number)) return 'Visa';
+    if (/^5[1-5]/.test(number)) return 'Mastercard';
+    if (/^3[47]/.test(number)) return 'American Express';
+    if (/^6(?:011|5)/.test(number)) return 'Discover';
+    if (/^(?:2131|1800|35)/.test(number)) return 'JCB';
+    if (/^3(?:0[0-5]|[68])/.test(number)) return 'Diners Club';
+    return 'Неизвестный';
+  }
+
+  function getBankByBin(bin) {
+    // Это упрощённый список. В реальности нужно API.
+    const banks = {
+      '411111': 'Visa Test',
+      '555555': 'Mastercard Test',
+      '378282': 'American Express Test',
+      '520082': 'Capital One',
+      '400005': 'Chase',
+      '545454': 'Citi',
+      '453999': 'Wells Fargo',
+      '511111': 'Barclays',
+      '402400': 'US Bank',
+      '542418': 'TD Bank',
+      '400018': 'Bank of America',
+      '511234': 'HSBC',
+      '400023': 'Discover',
+      '547300': 'Santander',
+      '400000': 'Ally',
+      '510000': 'Sberbank',
+      '431195': 'Tinkoff',
+      '400001': 'Raiffeisen',
+      '520000': 'VTB',
+      '400002': 'Gazprombank',
+      '530000': 'Rosbank',
+      '400003': 'Promsvyazbank',
+      '540000': 'Credit Europe Bank',
+      '400004': 'Home Credit Bank',
+      '550000': 'OTP Bank',
+      '400006': 'Renaissance Capital',
+      '560000': 'Sovcombank',
+      '400007': 'Alpha Bank',
+      '570000': 'Unistream',
+      '400008': 'QIWI Bank',
+      '580000': 'Tinkoff Bank',
+      '400009': 'Raiffeisenbank',
+      '590000': 'RosEvroBank',
+      '400010': 'Binbank',
+      '500000': 'MKB',
+      '400011': 'Rusfinance Bank',
+      '510001': 'Mortgage Bank',
+      '400012': 'TransCapital Bank',
+      '520001': 'Svyaznoy Bank',
+      '400013': 'Russian Standard Bank',
+      '530001': 'Home Credit Bank',
+      '400014': 'OTP Bank',
+      '540001': 'Sberbank',
+      '400015': 'VTB',
+      '550001': 'Gazprombank',
+      '400016': 'Raiffeisenbank',
+      '560001': 'Alfa-Bank',
+      '400017': 'Tinkoff',
+      '570001': 'Sovcombank',
+      '400019': 'Promsvyazbank',
+      '547419': 'Chase',
+      '542842': 'Citi',
+      '512345': 'Barclays',
+      '543210': 'HSBC',
+      '510510': 'American Express',
+      '540540': 'Discover',
+      '511234': 'Capital One',
+      '543210': 'Wells Fargo',
+      '510010': 'Bank of America',
+      '520002': 'US Bank',
+      '547301': 'TD Bank',
+    };
+    return banks[bin] || 'Неизвестный';
+  }
+
+  function getCountryByBin(bin) {
+    // Упрощённо
+    const countries = {
+      '411111': 'USA',
+      '555555': 'USA',
+      '378282': 'USA',
+      '520082': 'USA',
+      '400005': 'USA',
+      '545454': 'USA',
+      '453999': 'USA',
+      '511111': 'UK',
+      '402400': 'USA',
+      '542418': 'Canada',
+      '400018': 'USA',
+      '511234': 'UK',
+      '400023': 'USA',
+      '547300': 'Spain',
+      '400000': 'Russia',
+      '510000': 'Russia',
+      '400001': 'Russia',
+      '530000': 'Russia',
+      '400002': 'Russia',
+      '540000': 'Russia',
+      '400003': 'Russia',
+      '550000': 'Russia',
+      '400004': 'Russia',
+      '560000': 'Russia',
+      '400006': 'Russia',
+      '570000': 'Russia',
+      '400007': 'Russia',
+      '580000': 'Russia',
+      '400008': 'Russia',
+      '590000': 'Russia',
+      '400010': 'Russia',
+      '500000': 'Russia',
+      '400011': 'Russia',
+      '510001': 'Russia',
+      '400012': 'Russia',
+      '520001': 'Russia',
+      '400013': 'Russia',
+      '530001': 'Russia',
+      '400014': 'Russia',
+      '540001': 'Russia',
+      '400015': 'Russia',
+      '550001': 'Russia',
+      '400016': 'Russia',
+      '560001': 'Russia',
+      '400017': 'Russia',
+      '570001': 'Russia',
+      '400019': 'Russia',
+      '547419': 'USA',
+      '542842': 'USA',
+      '512345': 'UK',
+      '543210': 'USA',
+      '510510': 'USA',
+      '540540': 'USA',
+      '511234': 'USA',
+      '543210': 'USA',
+      '510010': 'USA',
+      '520002': 'USA',
+    };
+    return countries[bin] || 'Неизвестная';
+  }
+
+  function getCardSubType(bin) {
+    // Упрощённо
+    const types = {
+      '520082': 'Credit',
+      '400005': 'Credit',
+      '545454': 'Credit',
+      '453999': 'Credit',
+      '511111': 'Credit',
+      '402400': 'Debit',
+      '542418': 'Credit',
+      '400018': 'Debit',
+      '511234': 'Credit',
+      '400023': 'Credit',
+      '547300': 'Debit',
+      '400000': 'Debit',
+      '510000': 'Credit',
+      '400001': 'Debit',
+      '530000': 'Credit',
+      '400002': 'Credit',
+      '540000': 'Credit',
+      '400003': 'Debit',
+      '550000': 'Credit',
+      '400004': 'Debit',
+      '560000': 'Credit',
+      '400006': 'Credit',
+      '570000': 'Debit',
+      '400007': 'Credit',
+      '580000': 'Debit',
+      '400008': 'Debit',
+      '590000': 'Credit',
+      '400010': 'Credit',
+      '500000': 'Credit',
+      '400011': 'Debit',
+      '510001': 'Credit',
+      '400012': 'Credit',
+      '520001': 'Debit',
+      '400013': 'Credit',
+      '530001': 'Debit',
+      '400014': 'Credit',
+      '540001': 'Debit',
+      '400015': 'Debit',
+      '550001': 'Credit',
+      '400016': 'Credit',
+      '560001': 'Credit',
+      '400017': 'Credit',
+      '570001': 'Debit',
+      '400019': 'Debit',
+      '547419': 'Credit',
+      '542842': 'Credit',
+      '512345': 'Credit',
+      '543210': 'Credit',
+      '510510': 'Credit',
+      '540540': 'Credit',
+      '511234': 'Credit',
+      '543210': 'Credit',
+      '510010': 'Credit',
+      '520002': 'Credit',
+    };
+    return types[bin] || 'Неизвестный';
+  }
+
+  function getCardClass(bin, type) {
+    // Упрощённо
+    const classes = {
+      '520082': 'Travel Rewards',
+      '400005': 'Cash Back',
+      '545454': 'Business',
+      '453999': 'Standard',
+      '511111': 'Premium',
+      '402400': 'Standard',
+      '542418': 'Business',
+      '400018': 'Standard',
+      '511234': 'Premium',
+      '400023': 'Standard',
+      '547300': 'Standard',
+      '400000': 'Standard',
+      '510000': 'Premium',
+      '400001': 'Standard',
+      '530000': 'Premium',
+      '400002': 'Premium',
+      '540000': 'Standard',
+      '400003': 'Standard',
+      '550000': 'Standard',
+      '400004': 'Standard',
+      '560000': 'Premium',
+      '400006': 'Premium',
+      '570000': 'Standard',
+      '400007': 'Premium',
+      '580000': 'Standard',
+      '400008': 'Standard',
+      '590000': 'Premium',
+      '400010': 'Standard',
+      '500000': 'Premium',
+      '400011': 'Standard',
+      '510001': 'Standard',
+      '400012': 'Standard',
+      '520001': 'Standard',
+      '400013': 'Premium',
+      '530001': 'Standard',
+      '400014': 'Premium',
+      '540001': 'Standard',
+      '400015': 'Standard',
+      '550001': 'Premium',
+      '400016': 'Premium',
+      '560001': 'Premium',
+      '400017': 'Travel Rewards',
+      '570001': 'Standard',
+      '400019': 'Standard',
+      '547419': 'Cash Back',
+      '542842': 'Travel Rewards',
+      '512345': 'Premium',
+      '543210': 'Business',
+      '510510': 'Premium',
+      '540540': 'Cash Back',
+      '511234': 'Business',
+      '543210': 'Premium',
+      '510010': 'Standard',
+      '520002': 'Business',
+    };
+    return classes[bin] || (type === 'American Express' ? 'Premium' : 'Standard');
+  }
 }
