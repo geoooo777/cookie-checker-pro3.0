@@ -64,6 +64,14 @@ const cardNumberInput = document.getElementById('cardNumber');
 const cardExpiryInput = document.getElementById('cardExpiry');
 const checkCardBtn = document.getElementById('checkCardBtn');
 const cardResult = document.getElementById('cardResult');
+const cardValidSpan = document.getElementById('cardValid');
+const cardTypeSpan = document.getElementById('cardType');
+const cardBinSpan = document.getElementById('cardBin');
+const cardBankSpan = document.getElementById('cardBank');
+const cardCountrySpan = document.getElementById('cardCountry');
+const cardSubTypeSpan = document.getElementById('cardSubType');
+const cardClassSpan = document.getElementById('cardClass');
+const cardExpiryStatusSpan = document.getElementById('cardExpiryStatus');
 
 // На странице авторизации
 if (window.location.pathname.includes('auth.html')) {
@@ -534,49 +542,50 @@ if (window.location.pathname.includes('dashboard.html')) {
     const expiry = cardExpiryInput.value;
 
     if (!number || !expiry) {
-      cardResult.textContent = 'Введите номер карты и срок действия.';
       cardResult.style.display = 'block';
+      cardValidSpan.textContent = 'Введите номер карты и срок действия.';
+      cardTypeSpan.textContent = '-';
+      cardBinSpan.textContent = '-';
+      cardBankSpan.textContent = '-';
+      cardCountrySpan.textContent = '-';
+      cardSubTypeSpan.textContent = '-';
+      cardClassSpan.textContent = '-';
+      cardExpiryStatusSpan.textContent = '-';
       return;
     }
 
     const result = analyzeCard(number, expiry);
-    cardResult.textContent = result;
     cardResult.style.display = 'block';
   };
 
   function analyzeCard(number, expiry) {
-    let output = '';
-
     // Валидация номера (алгоритм Луна)
-    if (!luhnValidate(number)) {
-      output += '❌ Номер карты: НЕВАЛИДЕН (ошибка в формате/цифрах)\n';
-    } else {
-      output += '✅ Номер карты: ВАЛИДЕН\n';
-    }
+    const isValid = luhnValidate(number);
+    cardValidSpan.textContent = isValid ? 'ВАЛИДЕН' : 'НЕВАЛИДЕН';
 
     // Определение типа карты
     const cardType = getCardType(number);
-    output += `💳 Тип карты: ${cardType}\n`;
+    cardTypeSpan.textContent = cardType;
 
     // Определение BIN
     const bin = number.substring(0, 6);
-    output += `🔢 BIN: ${bin}\n`;
+    cardBinSpan.textContent = bin;
 
     // Определение банка (упрощённо)
     const bank = getBankByBin(bin);
-    output += `🏦 Банк: ${bank}\n`;
+    cardBankSpan.textContent = bank;
 
     // Определение страны (упрощённо)
     const country = getCountryByBin(bin);
-    output += `🌍 Страна: ${country}\n`;
+    cardCountrySpan.textContent = country;
 
     // Определение типа (кредит/дебет)
     const cardSubType = getCardSubType(bin);
-    output += `💳 Подтип: ${cardSubType}\n`;
+    cardSubTypeSpan.textContent = cardSubType;
 
     // Определение класса карты (упрощённо)
     const cardClass = getCardClass(bin, cardType);
-    output += `🏷️ Класс: ${cardClass}\n`;
+    cardClassSpan.textContent = cardClass;
 
     // Проверка срока действия
     const [expMonth, expYear] = expiry.split('/');
@@ -585,12 +594,12 @@ if (window.location.pathname.includes('dashboard.html')) {
     const currentMonth = now.getMonth() + 1;
 
     if (parseInt(expYear) < currentYear || (parseInt(expYear) === currentYear && parseInt(expMonth) < currentMonth)) {
-      output += `⏰ Срок действия: ПРОСРОЧЕН\n`;
+      cardExpiryStatusSpan.textContent = 'ПРОСРОЧЕН';
     } else {
-      output += `⏰ Срок действия: АКТУАЛЕН\n`;
+      cardExpiryStatusSpan.textContent = 'АКТУАЛЕН';
     }
 
-    return output;
+    return '';
   }
 
   function luhnValidate(cardNumber) {
