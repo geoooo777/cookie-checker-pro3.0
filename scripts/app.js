@@ -59,6 +59,9 @@ const modePasswordsBtn = document.getElementById('modePasswordsBtn');
 const modeValidateBtn = document.getElementById('modeValidateBtn');
 const modeAllBtn = document.getElementById('modeAllBtn');
 
+// Конвертация в JSON (новая кнопка)
+const convertToJSONBtn = document.getElementById('convertToJSONBtn');
+
 // Чекер карт
 const cardNumberInput = document.getElementById('cardNumber');
 const cardExpiryInput = document.getElementById('cardExpiry');
@@ -127,7 +130,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     document.body.classList.add('light-theme');
   }
 
-  // 2. Режимы (только для куки/паролей)
+  // 2. Режимы
   modeCookiesBtn.onclick = () => {
     currentMode = 'cookies';
     setActiveModeButton(modeCookiesBtn);
@@ -285,7 +288,27 @@ if (window.location.pathname.includes('dashboard.html')) {
     alert('Пароли очищены');
   };
 
-  // 9. Валидация кук и паролей
+  // 9. НОВОЕ: Конвертация куков в JSON
+  convertToJSONBtn.onclick = () => {
+    if (cookies.length === 0) {
+      alert('Сначала загрузите файл с куками.');
+      return;
+    }
+
+    const jsonData = JSON.stringify(cookies, null, 2);
+
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cookies_${currentFileName.replace('.txt', '') || 'converted'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert('Куки успешно конвертированы в JSON и скачаны.');
+  };
+
+  // 10. Валидация кук и паролей
   function validateCredentials() {
     if (cookies.length === 0 || passwords.length === 0) {
       resultDisplay.textContent = 'Для проверки валидности нужно загрузить и куки, и пароли.';
@@ -314,7 +337,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     downloadPasswordsBtn.style.display = 'none';
   }
 
-  // 10. Формат валидных куки/паролей
+  // 11. Формат валидных куки/паролей
   function formatValidatedCredentials(credentials) {
     let output = '';
     credentials.forEach(c => {
@@ -326,7 +349,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 11. Фильтрация по нескольким доменам
+  // 12. Фильтрация по нескольким доменам
   function filterByDomains(domains) {
     filteredCookies = cookies.filter(c => domains.some(d => c.domain.includes(d)));
     filteredPasswords = passwords.filter(p => domains.some(d => p.domain.includes(d)));
@@ -351,7 +374,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 12. Формат результатов (куки + пароли)
+  // 13. Формат результатов (куки + пароли)
   function formatResults(cookies, passwords) {
     let output = '';
 
@@ -383,7 +406,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 13. Формат только паролей
+  // 14. Формат только паролей
   function formatPasswords(passwords) {
     let output = '';
     passwords.forEach(p => {
@@ -396,7 +419,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 14. Обработчики фильтров
+  // 15. Обработчики фильтров
   filterItems.forEach((item, index) => {
     item.onclick = () => {
       const checkbox = filterCheckboxes[index];
@@ -461,20 +484,20 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 15. Ручной поиск
+  // 16. Ручной поиск
   searchBtn.onclick = () => {
     const domain = domainFilter.value.trim();
     if (!domain) return;
     filterByDomains([domain]);
   };
 
-  // 16. Копирование
+  // 17. Копирование
   copyBtn.onclick = () => {
     navigator.clipboard.writeText(resultDisplay.textContent);
     alert('Скопировано в буфер обмена');
   };
 
-  // 17. Скачивание куков
+  // 18. Скачивание куков
   downloadBtn.onclick = () => {
     const content = formatCookiesByDomain(filteredCookies);
     const blob = new Blob([content], { type: 'text/plain' });
@@ -486,7 +509,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 18. Скачивание паролей
+  // 19. Скачивание паролей
   downloadPasswordsBtn.onclick = () => {
     let content = '';
     filteredPasswords.forEach(p => {
@@ -505,7 +528,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 19. Формат куков по доменам
+  // 20. Формат куков по доменам
   function formatCookiesByDomain(cookies) {
     const grouped = {};
     cookies.forEach(c => {
@@ -522,21 +545,21 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 20. Тема
+  // 21. Тема
   themeToggle.onclick = () => {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   };
 
-  // 21. Выход
+  // 22. Выход
   logoutBtn.onclick = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
     window.location.href = 'auth.html';
   };
 
-  // 22. Чекер карт
+  // 23. Чекер карт
   checkCardBtn.onclick = () => {
     const number = cardNumberInput.value.replace(/\s/g, '');
     const expiry = cardExpiryInput.value;
@@ -571,11 +594,11 @@ if (window.location.pathname.includes('dashboard.html')) {
     const bin = number.substring(0, 6);
     cardBinSpan.textContent = bin;
 
-    // Определение банка (только международные)
+    // Определение банка (упрощённо)
     const bank = getBankByBin(bin);
     cardBankSpan.textContent = bank;
 
-    // Определение страны (только международные)
+    // Определение страны (упрощённо)
     const country = getCountryByBin(bin);
     cardCountrySpan.textContent = country;
 
@@ -583,7 +606,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     const cardSubType = getCardSubType(bin);
     cardSubTypeSpan.textContent = cardSubType;
 
-    // Определение класса карты (только международные)
+    // Определение класса карты (упрощённо)
     const cardClass = getCardClass(bin, cardType);
     cardClassSpan.textContent = cardClass;
 
@@ -629,7 +652,7 @@ if (window.location.pathname.includes('dashboard.html')) {
 
   function getBankByBin(bin) {
     // Это упрощённый список. В реальности нужно API.
-    // Только международные банки (без российских)
+    // Только международные банки
     const banks = {
       '411111': 'Visa Test',
       '555555': 'Mastercard Test',
@@ -657,7 +680,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       '560000': 'Crédit Agricole France',
       '400006': 'Société Générale France',
       '570000': 'AXA Banque France',
-      '400007': 'Banco do Brasil Brazil',
+      '400007': 'Banco do Brasil',
       '580000': 'Itaú Unibanco Brazil',
       '400008': 'Bradesco Brazil',
       '590000': 'Santander Mexico',
@@ -666,7 +689,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       '400011': 'Sumitomo Mitsui Japan',
       '510001': 'Mizuho Bank Japan',
       '400012': 'SMBC Card Japan',
-      '520001': 'China Construction Bank China',
+      '520001': 'China Construction Bank',
       '400013': 'Industrial and Commercial Bank of China',
       '530001': 'Agricultural Bank of China',
       '400014': 'Bank of China',
@@ -689,6 +712,8 @@ if (window.location.pathname.includes('dashboard.html')) {
       '510010': 'Bank of America',
       '520002': 'US Bank',
       '547301': 'TD Bank Canada',
+
+      // Добавь новые BIN-ы
       '478200': 'Bank of America',
       '478201': 'Chase',
       '478202': 'Citi',
@@ -711,7 +736,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       '478219': 'Crédit Agricole France',
       '478220': 'Société Générale France',
       '478221': 'AXA Banque France',
-      '478222': 'Banco do Brasil Brazil',
+      '478222': 'Banco do Brasil',
       '478223': 'Itaú Unibanco Brazil',
       '478224': 'Bradesco Brazil',
       '478225': 'Santander Mexico',
@@ -720,7 +745,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       '478228': 'Sumitomo Mitsui Japan',
       '478229': 'Mizuho Bank Japan',
       '478230': 'SMBC Card Japan',
-      '478231': 'China Construction Bank China',
+      '478231': 'China Construction Bank',
       '478232': 'Industrial and Commercial Bank of China',
       '478233': 'Agricultural Bank of China',
       '478234': 'Bank of China',
@@ -794,7 +819,7 @@ if (window.location.pathname.includes('dashboard.html')) {
   }
 
   function getCountryByBin(bin) {
-    // Только международные страны (без России)
+    // Только международные страны
     const countries = {
       '411111': 'USA',
       '555555': 'USA',
@@ -850,110 +875,9 @@ if (window.location.pathname.includes('dashboard.html')) {
       '510510': 'USA',
       '540540': 'USA',
       '511234': 'USA',
-      '543210': 'USA',
+      '543210': 'UK',
       '510010': 'USA',
       '520002': 'USA',
-      '547301': 'Canada',
-      '478200': 'USA',
-      '478201': 'USA',
-      '478202': 'USA',
-      '478203': 'USA',
-      '478204': 'USA',
-      '478205': 'Canada',
-      '478206': 'UK',
-      '478207': 'UK',
-      '478208': 'USA',
-      '478209': 'Spain',
-      '478210': 'USA',
-      '478211': 'UK',
-      '478212': 'France',
-      '478213': 'Netherlands',
-      '478214': 'Germany',
-      '478215': 'Germany',
-      '478216': 'Italy',
-      '478217': 'Spain',
-      '478218': 'Spain',
-      '478219': 'France',
-      '478220': 'France',
-      '478221': 'France',
-      '478222': 'Brazil',
-      '478223': 'Brazil',
-      '478224': 'Brazil',
-      '478225': 'Mexico',
-      '478226': 'Mexico',
-      '478227': 'Japan',
-      '478228': 'Japan',
-      '478229': 'Japan',
-      '478230': 'Japan',
-      '478231': 'China',
-      '478232': 'China',
-      '478233': 'China',
-      '478234': 'China',
-      '478235': 'Hong Kong',
-      '478236': 'Hong Kong',
-      '478237': 'Hong Kong',
-      '478238': 'Singapore',
-      '478239': 'Singapore',
-      '478240': 'Singapore',
-      '478241': 'Australia',
-      '478242': 'Australia',
-      '478243': 'Australia',
-      '478244': 'Australia',
-      '478245': 'UK',
-      '478246': 'UK',
-      '478247': 'UK',
-      '478248': 'UK',
-      '478249': 'UK',
-      '478250': 'UK',
-      '478251': 'UK',
-      '478252': 'UK',
-      '478253': 'Germany',
-      '478254': 'Germany',
-      '478255': 'Germany',
-      '478256': 'Germany',
-      '478257': 'Germany',
-      '478258': 'Germany',
-      '478259': 'Germany',
-      '478260': 'Germany',
-      '478261': 'Germany',
-      '478262': 'Germany',
-      '478263': 'Germany',
-      '478264': 'Germany',
-      '478265': 'Germany',
-      '478266': 'Germany',
-      '478267': 'Germany',
-      '478268': 'Germany',
-      '478269': 'Germany',
-      '478270': 'Germany',
-      '478271': 'Germany',
-      '478272': 'Germany',
-      '478273': 'Germany',
-      '478274': 'Germany',
-      '478275': 'Germany',
-      '478276': 'Germany',
-      '478277': 'Germany',
-      '478278': 'Germany',
-      '478279': 'Germany',
-      '478280': 'Germany',
-      '478281': 'Germany',
-      '478282': 'USA',
-      '478283': 'USA',
-      '478284': 'USA',
-      '478285': 'USA',
-      '478286': 'USA',
-      '478287': 'Canada',
-      '478288': 'UK',
-      '478289': 'UK',
-      '478290': 'USA',
-      '478291': 'Spain',
-      '478292': 'USA',
-      '478293': 'UK',
-      '478294': 'France',
-      '478295': 'Netherlands',
-      '478296': 'Germany',
-      '478297': 'Germany',
-      '478298': 'Italy',
-      '478299': 'Spain',
     };
     return countries[bin] || 'Неизвестная';
   }
