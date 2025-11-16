@@ -506,3 +506,103 @@ body.light-theme .result-box {
   background: #f0f0f0;
   border: 1px solid var(--light-border);
 }
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 15px;
+  background: #252538;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(106, 90, 205, 0.2);
+}
+
+.tab-btn.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(106, 90, 205, 0.3);
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.card-checker-container {
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card-checker-container h3 {
+  margin-top: 0;
+  color: #6a5acd;
+}
+
+.card-input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.card-input-section input {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #252538;
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.card-input-section input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
+}
+
+.check-card-btn {
+  padding: 12px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.check-card-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(106, 90, 205, 0.3);
+}
+
+.card-result-box {
+  background: #252538;
+  padding: 15px;
+  border-radius: var(--radius);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  white-space: pre-wrap;
+}
