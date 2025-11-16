@@ -27,7 +27,7 @@ let filteredCookies = [];
 let filteredPasswords = [];
 let currentFileName = '';
 let currentPasswordFileName = '';
-let currentMode = 'both'; // 'cookies', 'passwords', 'validate', 'both'
+let currentMode = 'all'; // 'cookies', 'passwords', 'validate', 'all'
 
 // DOM
 const logoutBtn = document.getElementById('logoutBtn');
@@ -57,6 +57,7 @@ const filterItems = document.querySelectorAll('.filter-item');
 const modeCookiesBtn = document.getElementById('modeCookiesBtn');
 const modePasswordsBtn = document.getElementById('modePasswordsBtn');
 const modeValidateBtn = document.getElementById('modeValidateBtn');
+const modeAllBtn = document.getElementById('modeAllBtn'); // NEW
 
 // На странице авторизации
 if (window.location.pathname.includes('auth.html')) {
@@ -107,7 +108,12 @@ if (window.location.pathname.includes('dashboard.html')) {
     window.location.href = 'auth.html';
   }
 
-  // 1. Режимы
+  // 1. Тема (загрузка из localStorage)
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-theme');
+  }
+
+  // 2. Режимы
   modeCookiesBtn.onclick = () => {
     currentMode = 'cookies';
     setActiveModeButton(modeCookiesBtn);
@@ -126,12 +132,18 @@ if (window.location.pathname.includes('dashboard.html')) {
     validateCredentials();
   };
 
+  modeAllBtn.onclick = () => { // NEW
+    currentMode = 'all';
+    setActiveModeButton(modeAllBtn);
+    updateFilters();
+  };
+
   function setActiveModeButton(activeBtn) {
-    [modeCookiesBtn, modePasswordsBtn, modeValidateBtn].forEach(btn => btn.classList.remove('active'));
+    [modeCookiesBtn, modePasswordsBtn, modeValidateBtn, modeAllBtn].forEach(btn => btn.classList.remove('active'));
     activeBtn.classList.add('active');
   }
 
-  // 2. Загрузка куков
+  // 3. Загрузка куков
   cookieFile.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -145,13 +157,12 @@ if (window.location.pathname.includes('dashboard.html')) {
       cookies = parseCookies(text);
       cookieCountSpan.textContent = cookies.length;
       fileInfo.style.display = 'block';
-      // После загрузки куков - обновляем фильтры
       updateFilters();
     };
     reader.readAsText(file);
   };
 
-  // 3. Загрузка паролей (новый формат)
+  // 4. Загрузка паролей
   passwordFile.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -165,13 +176,12 @@ if (window.location.pathname.includes('dashboard.html')) {
       passwords = parsePasswords(text);
       passwordCountSpan.textContent = passwords.length;
       passwordInfo.style.display = 'block';
-      // После загрузки паролей - обновляем фильтры
       updateFilters();
     };
     reader.readAsText(file);
   };
 
-  // 4. Парсинг куков (как раньше)
+  // 5. Парсинг куков
   function parseCookies(text) {
     return text.split('\n')
       .filter(line => !line.startsWith('#') && line.trim() !== '')
@@ -181,7 +191,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       });
   }
 
-  // 5. Парсинг паролей (новый формат)
+  // 6. Парсинг паролей
   function parsePasswords(text) {
     const entries = text.split('===============');
     const parsed = [];
@@ -206,13 +216,10 @@ if (window.location.pathname.includes('dashboard.html')) {
       }
 
       if (url && username && password) {
-        // Извлекаем домен из URL
         try {
           const domain = new URL(url).hostname;
           parsed.push({ url, domain, username, password });
         } catch (e) {
-          console.warn(`Неверный URL: ${url}`);
-          // Или можно попробовать извлечь домен через регулярку
           const match = url.match(/^(?:https?:\/\/)?([^\/\?#]+)/i);
           if (match && match[1]) {
             parsed.push({ url, domain: match[1], username, password });
@@ -224,7 +231,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return parsed;
   }
 
-  // 6. Очистка куков (полноценная)
+  // 7. Очистка куков
   clearCookiesBtn.onclick = () => {
     cookies = [];
     filteredCookies = [];
@@ -232,22 +239,19 @@ if (window.location.pathname.includes('dashboard.html')) {
     fileNameSpan.textContent = '';
     cookieCountSpan.textContent = '0';
     fileInfo.style.display = 'none';
-    // Если паролей нет - очищаем всё
     if (passwords.length === 0) {
       resultDisplay.textContent = '';
       resultCount.textContent = 'Найдено: 0';
       downloadBtn.style.display = 'none';
       downloadPasswordsBtn.style.display = 'none';
-      // Сбрасываем фильтры
       filterCheckboxes.forEach(checkbox => checkbox.checked = false);
     } else {
-      // Если пароли есть - обновляем фильтры
       updateFilters();
     }
     alert('Куки очищены');
   };
 
-  // 7. Очистка паролей (полноценная)
+  // 8. Очистка паролей
   clearPasswordsBtn.onclick = () => {
     passwords = [];
     filteredPasswords = [];
@@ -255,47 +259,17 @@ if (window.location.pathname.includes('dashboard.html')) {
     passwordFileNameSpan.textContent = '';
     passwordCountSpan.textContent = '0';
     passwordInfo.style.display = 'none';
-    // Если куков нет - очищаем всё
     if (cookies.length === 0) {
       resultDisplay.textContent = '';
       resultCount.textContent = 'Найдено: 0';
       downloadBtn.style.display = 'none';
       downloadPasswordsBtn.style.display = 'none';
-      // Сбрасываем фильтры
       filterCheckboxes.forEach(checkbox => checkbox.checked = false);
     } else {
-      // Если куки есть - обновляем фильтры
       updateFilters();
     }
     alert('Пароли очищены');
   };
-
-  // 8. Фильтрация по нескольким доменам
-  function filterByDomains(domains) {
-    filteredCookies = cookies.filter(c => domains.some(d => c.domain.includes(d)));
-    // Фильтруем пароли по домену
-    filteredPasswords = passwords.filter(p => domains.some(d => p.domain.includes(d)));
-
-    if (currentMode === 'cookies') {
-      resultCount.textContent = `Найдено: ${filteredCookies.length} кук`;
-      resultDisplay.textContent = formatCookiesByDomain(filteredCookies);
-      downloadBtn.style.display = filteredCookies.length > 0 ? 'block' : 'none';
-      downloadPasswordsBtn.style.display = 'none';
-    } else if (currentMode === 'passwords') {
-      resultCount.textContent = `Найдено: ${filteredPasswords.length} паролей`;
-      resultDisplay.textContent = formatPasswords(filteredPasswords);
-      downloadPasswordsBtn.style.display = filteredPasswords.length > 0 ? 'block' : 'none';
-      downloadBtn.style.display = 'none';
-    } else if (currentMode === 'validate') {
-      // Валидация будет вызвана отдельно
-      validateCredentials();
-    } else { // both
-      resultCount.textContent = `Найдено: ${filteredCookies.length} кук, ${filteredPasswords.length} паролей`;
-      resultDisplay.textContent = formatResults(filteredCookies, filteredPasswords);
-      downloadBtn.style.display = filteredCookies.length > 0 ? 'block' : 'none';
-      downloadPasswordsBtn.style.display = filteredPasswords.length > 0 ? 'block' : 'none';
-    }
-  }
 
   // 9. Валидация кук и паролей
   function validateCredentials() {
@@ -308,9 +282,6 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
 
     const validCredentials = [];
-    const cookieDomains = new Set(cookies.map(c => c.domain));
-    const passwordDomains = new Set(passwords.map(p => p.domain));
-
     for (const cookie of cookies) {
       for (const password of passwords) {
         if (cookie.domain === password.domain) {
@@ -341,7 +312,32 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 11. Формат результатов (куки + пароли)
+  // 11. Фильтрация по нескольким доменам
+  function filterByDomains(domains) {
+    filteredCookies = cookies.filter(c => domains.some(d => c.domain.includes(d)));
+    filteredPasswords = passwords.filter(p => domains.some(d => p.domain.includes(d)));
+
+    if (currentMode === 'cookies') {
+      resultCount.textContent = `Найдено: ${filteredCookies.length} кук`;
+      resultDisplay.textContent = formatCookiesByDomain(filteredCookies);
+      downloadBtn.style.display = filteredCookies.length > 0 ? 'block' : 'none';
+      downloadPasswordsBtn.style.display = 'none';
+    } else if (currentMode === 'passwords') {
+      resultCount.textContent = `Найдено: ${filteredPasswords.length} паролей`;
+      resultDisplay.textContent = formatPasswords(filteredPasswords);
+      downloadPasswordsBtn.style.display = filteredPasswords.length > 0 ? 'block' : 'none';
+      downloadBtn.style.display = 'none';
+    } else if (currentMode === 'validate') {
+      validateCredentials();
+    } else { // all
+      resultCount.textContent = `Найдено: ${filteredCookies.length} кук, ${filteredPasswords.length} паролей`;
+      resultDisplay.textContent = formatResults(filteredCookies, filteredPasswords);
+      downloadBtn.style.display = filteredCookies.length > 0 ? 'block' : 'none';
+      downloadPasswordsBtn.style.display = filteredPasswords.length > 0 ? 'block' : 'none';
+    }
+  }
+
+  // 12. Формат результатов (куки + пароли)
   function formatResults(cookies, passwords) {
     let output = '';
 
@@ -373,7 +369,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 12. Формат только паролей
+  // 13. Формат только паролей
   function formatPasswords(passwords) {
     let output = '';
     passwords.forEach(p => {
@@ -386,7 +382,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 13. Обработчики фильтров
+  // 14. Обработчики фильтров
   filterItems.forEach((item, index) => {
     item.onclick = () => {
       const checkbox = filterCheckboxes[index];
@@ -423,7 +419,6 @@ if (window.location.pathname.includes('dashboard.html')) {
     if (selectedDomains.length > 0) {
       filterByDomains(selectedDomains);
     } else {
-      // Если фильтры сброшены и нет данных - очищаем результаты
       if (cookies.length === 0 && passwords.length === 0) {
         resultDisplay.textContent = '';
         resultCount.textContent = 'Найдено: 0';
@@ -432,7 +427,6 @@ if (window.location.pathname.includes('dashboard.html')) {
       } else if (currentMode === 'validate') {
         validateCredentials();
       } else {
-        // Если фильтры сброшены, но есть данные - показываем всё
         if (currentMode === 'cookies') {
           resultCount.textContent = `Найдено: ${cookies.length} кук`;
           resultDisplay.textContent = formatCookiesByDomain(cookies);
@@ -443,7 +437,7 @@ if (window.location.pathname.includes('dashboard.html')) {
           resultDisplay.textContent = formatPasswords(passwords);
           downloadPasswordsBtn.style.display = passwords.length > 0 ? 'block' : 'none';
           downloadBtn.style.display = 'none';
-        } else { // both
+        } else if (currentMode === 'all') {
           resultCount.textContent = `Найдено: ${cookies.length} кук, ${passwords.length} паролей`;
           resultDisplay.textContent = formatResults(cookies, passwords);
           downloadBtn.style.display = cookies.length > 0 ? 'block' : 'none';
@@ -453,20 +447,20 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 14. Ручной поиск
+  // 15. Ручной поиск
   searchBtn.onclick = () => {
     const domain = domainFilter.value.trim();
     if (!domain) return;
     filterByDomains([domain]);
   };
 
-  // 15. Копирование
+  // 16. Копирование
   copyBtn.onclick = () => {
     navigator.clipboard.writeText(resultDisplay.textContent);
     alert('Скопировано в буфер обмена');
   };
 
-  // 16. Скачивание куков
+  // 17. Скачивание куков
   downloadBtn.onclick = () => {
     const content = formatCookiesByDomain(filteredCookies);
     const blob = new Blob([content], { type: 'text/plain' });
@@ -478,7 +472,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 17. Скачивание паролей
+  // 18. Скачивание паролей
   downloadPasswordsBtn.onclick = () => {
     let content = '';
     filteredPasswords.forEach(p => {
@@ -497,7 +491,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 18. Формат куков по доменам
+  // 19. Формат куков по доменам
   function formatCookiesByDomain(cookies) {
     const grouped = {};
     cookies.forEach(c => {
@@ -514,21 +508,17 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 19. Тема
+  // 20. Тема
   themeToggle.onclick = () => {
-    document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+    document.body.classList.toggle('light-theme');
+    const isLight = document.body.classList.contains('light-theme');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
   };
 
-  // 20. Выход
+  // 21. Выход
   logoutBtn.onclick = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
     window.location.href = 'auth.html';
   };
-
-  // 21. Тема при загрузке
-  if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-theme');
-  }
 }
