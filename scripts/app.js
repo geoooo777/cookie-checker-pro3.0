@@ -571,11 +571,11 @@ if (window.location.pathname.includes('dashboard.html')) {
     const bin = number.substring(0, 6);
     cardBinSpan.textContent = bin;
 
-    // Определение банка (упрощённо)
+    // Определение банка (только международные)
     const bank = getBankByBin(bin);
     cardBankSpan.textContent = bank;
 
-    // Определение страны (упрощённо)
+    // Определение страны (только международные)
     const country = getCountryByBin(bin);
     cardCountrySpan.textContent = country;
 
@@ -583,7 +583,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     const cardSubType = getCardSubType(bin);
     cardSubTypeSpan.textContent = cardSubType;
 
-    // Определение класса карты (упрощённо)
+    // Определение класса карты (только международные)
     const cardClass = getCardClass(bin, cardType);
     cardClassSpan.textContent = cardClass;
 
@@ -629,6 +629,7 @@ if (window.location.pathname.includes('dashboard.html')) {
 
   function getBankByBin(bin) {
     // Это упрощённый список. В реальности нужно API.
+    // Только международные банки (без российских)
     const banks = {
       '411111': 'Visa Test',
       '555555': 'Mastercard Test',
@@ -637,168 +638,163 @@ if (window.location.pathname.includes('dashboard.html')) {
       '400005': 'Chase',
       '545454': 'Citi',
       '511234': 'Wells Fargo',
-      '511111': 'Barclays',
+      '511111': 'Barclays UK',
       '402400': 'US Bank',
-      '542418': 'TD Bank',
+      '542418': 'TD Bank Canada',
       '400018': 'Bank of America',
-      '511234': 'HSBC',
+      '511234': 'HSBC UK',
       '400023': 'Discover',
-      '547300': 'Santander',
-      '400000': 'Ally',
-      '510000': 'Sberbank',
-      '400001': 'Tinkoff',
-      '511234': 'Raiffeisen',
-      '520000': 'VTB',
-      '400002': 'Gazprombank',
-      '530000': 'Rosbank',
-      '400003': 'Promsvyazbank',
-      '540000': 'Credit Europe Bank',
-      '400004': 'Home Credit Bank',
-      '550000': 'OTP Bank',
-      '400006': 'Renaissance Capital',
-      '560000': 'Sovcombank',
-      '400007': 'Alpha Bank',
-      '570000': 'Unistream',
-      '400008': 'QIWI Bank',
-      '580000': 'Tinkoff Bank',
-      '400009': 'Raiffeisenbank',
-      '590000': 'RosEvroBank',
-      '400010': 'Binbank',
-      '500000': 'MKB',
-      '400011': 'Rusfinance Bank',
-      '510001': 'Mortgage Bank',
-      '400012': 'TransCapital Bank',
-      '520001': 'Svyaznoy Bank',
-      '400013': 'Russian Standard Bank',
-      '530001': 'Home Credit Bank',
-      '400014': 'OTP Bank',
-      '540001': 'Sberbank',
-      '400015': 'VTB',
-      '550001': 'Gazprombank',
-      '400016': 'Raiffeisenbank',
-      '560001': 'Alfa-Bank',
-      '400017': 'Tinkoff',
-      '570001': 'Sovcombank',
-      '400019': 'Promsvyazbank',
+      '547300': 'Santander Spain',
+      '400000': 'Ally Financial',
+      '510000': 'Santander UK',
+      '400001': 'BNP Paribas France',
+      '530000': 'ING Group Netherlands',
+      '400002': 'Deutsche Bank Germany',
+      '540000': 'Commerzbank Germany',
+      '400003': 'UniCredit Italy',
+      '550000': 'BBVA Spain',
+      '400004': 'CaixaBank Spain',
+      '560000': 'Crédit Agricole France',
+      '400006': 'Société Générale France',
+      '570000': 'AXA Banque France',
+      '400007': 'Banco do Brasil Brazil',
+      '580000': 'Itaú Unibanco Brazil',
+      '400008': 'Bradesco Brazil',
+      '590000': 'Santander Mexico',
+      '400010': 'Banamex Mexico',
+      '500000': 'Mitsubishi UFJ Japan',
+      '400011': 'Sumitomo Mitsui Japan',
+      '510001': 'Mizuho Bank Japan',
+      '400012': 'SMBC Card Japan',
+      '520001': 'China Construction Bank China',
+      '400013': 'Industrial and Commercial Bank of China',
+      '530001': 'Agricultural Bank of China',
+      '400014': 'Bank of China',
+      '540001': 'HSBC Hong Kong',
+      '400015': 'Standard Chartered Hong Kong',
+      '550001': 'Bank of East Asia Hong Kong',
+      '400016': 'OCBC Singapore',
+      '560001': 'DBS Bank Singapore',
+      '400017': 'UOB Singapore',
+      '570001': 'Commonwealth Bank Australia',
+      '400019': 'Westpac Australia',
       '547419': 'Chase',
       '542842': 'Citi',
-      '512345': 'Barclays',
-      '543210': 'HSBC',
+      '512345': 'Barclays UK',
+      '543210': 'HSBC UK',
       '510510': 'American Express',
       '540540': 'Discover',
       '511234': 'Capital One',
       '543210': 'Wells Fargo',
       '510010': 'Bank of America',
       '520002': 'US Bank',
-      '547301': 'TD Bank',
-
-      // Добавь новые BIN-ы
-      '478200': 'Bank of America', // Пример
-      '478201': 'Chase', // Пример
-      '478202': 'Citi', // Пример
-      '478203': 'Wells Fargo', // Пример
-      '478204': 'US Bank', // Пример
-      '478205': 'TD Bank', // Пример
-      '478206': 'Barclays', // Пример
-      '478207': 'HSBC', // Пример
-      '478208': 'Discover', // Пример
-      '478209': 'Santander', // Пример
-      '478210': 'Ally', // Пример
-      '478211': 'Sberbank', // Пример
-      '478212': 'Tinkoff', // Пример
-      '478213': 'Raiffeisen', // Пример
-      '478214': 'VTB', // Пример
-      '478215': 'Gazprombank', // Пример
-      '478216': 'Rosbank', // Пример
-      '478217': 'Promsvyazbank', // Пример
-      '478218': 'Credit Europe Bank', // Пример
-      '478219': 'Home Credit Bank', // Пример
-      '478220': 'OTP Bank', // Пример
-      '478221': 'Renaissance Capital', // Пример
-      '478222': 'Sovcombank', // Пример
-      '478223': 'Alpha Bank', // Пример
-      '478224': 'Unistream', // Пример
-      '478225': 'QIWI Bank', // Пример
-      '478226': 'Tinkoff Bank', // Пример
-      '478227': 'Raiffeisenbank', // Пример
-      '478228': 'RosEvroBank', // Пример
-      '478229': 'Binbank', // Пример
-      '478230': 'MKB', // Пример
-      '478231': 'Rusfinance Bank', // Пример
-      '478232': 'Mortgage Bank', // Пример
-      '478233': 'TransCapital Bank', // Пример
-      '478234': 'Svyaznoy Bank', // Пример
-      '478235': 'Russian Standard Bank', // Пример
-      '478236': 'Home Credit Bank', // Пример
-      '478237': 'OTP Bank', // Пример
-      '478238': 'Sberbank', // Пример
-      '478239': 'VTB', // Пример
-      '478240': 'Gazprombank', // Пример
-      '478241': 'Raiffeisenbank', // Пример
-      '478242': 'Alfa-Bank', // Пример
-      '478243': 'Tinkoff', // Пример
-      '478244': 'Sovcombank', // Пример
-      '478245': 'Promsvyazbank', // Пример
-      '478246': 'Chase', // Пример
-      '478247': 'Citi', // Пример
-      '478248': 'Wells Fargo', // Пример
-      '478249': 'US Bank', // Пример
-      '478250': 'TD Bank', // Пример
-      '478251': 'Barclays', // Пример
-      '478252': 'HSBC', // Пример
-      '478253': 'Discover', // Пример
-      '478254': 'Santander', // Пример
-      '478255': 'Ally', // Пример
-      '478256': 'Sberbank', // Пример
-      '478257': 'Tinkoff', // Пример
-      '478258': 'Raiffeisen', // Пример
-      '478259': 'VTB', // Пример
-      '478260': 'Gazprombank', // Пример
-      '478261': 'Rosbank', // Пример
-      '478262': 'Promsvyazbank', // Пример
-      '478263': 'Credit Europe Bank', // Пример
-      '478264': 'Home Credit Bank', // Пример
-      '478265': 'OTP Bank', // Пример
-      '478266': 'Renaissance Capital', // Пример
-      '478267': 'Sovcombank', // Пример
-      '478268': 'Alpha Bank', // Пример
-      '478269': 'Unistream', // Пример
-      '478270': 'QIWI Bank', // Пример
-      '478271': 'Tinkoff Bank', // Пример
-      '478272': 'Raiffeisenbank', // Пример
-      '478273': 'RosEvroBank', // Пример
-      '478274': 'Binbank', // Пример
-      '478275': 'MKB', // Пример
-      '478276': 'Rusfinance Bank', // Пример
-      '478277': 'Mortgage Bank', // Пример
-      '478278': 'TransCapital Bank', // Пример
-      '478279': 'Svyaznoy Bank', // Пример
-      '478280': 'Russian Standard Bank', // Пример
-      '478281': 'Home Credit Bank', // Пример
-      '478282': 'American Express Test', // Пример
-      '478283': 'Chase', // Пример
-      '478284': 'Citi', // Пример
-      '478285': 'Wells Fargo', // Пример
-      '478286': 'US Bank', // Пример
-      '478287': 'TD Bank', // Пример
-      '478288': 'Barclays', // Пример
-      '478289': 'HSBC', // Пример
-      '478290': 'Discover', // Пример
-      '478291': 'Santander', // Пример
-      '478292': 'Ally', // Пример
-      '478293': 'Sberbank', // Пример
-      '478294': 'Tinkoff', // Пример
-      '478295': 'Raiffeisen', // Пример
-      '478296': 'VTB', // Пример
-      '478297': 'Gazprombank', // Пример
-      '478298': 'Rosbank', // Пример
-      '478299': 'Promsvyazbank', // Пример
+      '547301': 'TD Bank Canada',
+      '478200': 'Bank of America',
+      '478201': 'Chase',
+      '478202': 'Citi',
+      '478203': 'Wells Fargo',
+      '478204': 'US Bank',
+      '478205': 'TD Bank Canada',
+      '478206': 'Barclays UK',
+      '478207': 'HSBC UK',
+      '478208': 'Discover',
+      '478209': 'Santander Spain',
+      '478210': 'Ally Financial',
+      '478211': 'Santander UK',
+      '478212': 'BNP Paribas France',
+      '478213': 'ING Group Netherlands',
+      '478214': 'Deutsche Bank Germany',
+      '478215': 'Commerzbank Germany',
+      '478216': 'UniCredit Italy',
+      '478217': 'BBVA Spain',
+      '478218': 'CaixaBank Spain',
+      '478219': 'Crédit Agricole France',
+      '478220': 'Société Générale France',
+      '478221': 'AXA Banque France',
+      '478222': 'Banco do Brasil Brazil',
+      '478223': 'Itaú Unibanco Brazil',
+      '478224': 'Bradesco Brazil',
+      '478225': 'Santander Mexico',
+      '478226': 'Banamex Mexico',
+      '478227': 'Mitsubishi UFJ Japan',
+      '478228': 'Sumitomo Mitsui Japan',
+      '478229': 'Mizuho Bank Japan',
+      '478230': 'SMBC Card Japan',
+      '478231': 'China Construction Bank China',
+      '478232': 'Industrial and Commercial Bank of China',
+      '478233': 'Agricultural Bank of China',
+      '478234': 'Bank of China',
+      '478235': 'HSBC Hong Kong',
+      '478236': 'Standard Chartered Hong Kong',
+      '478237': 'Bank of East Asia Hong Kong',
+      '478238': 'OCBC Singapore',
+      '478239': 'DBS Bank Singapore',
+      '478240': 'UOB Singapore',
+      '478241': 'Commonwealth Bank Australia',
+      '478242': 'Westpac Australia',
+      '478243': 'ANZ Australia',
+      '478244': 'National Australia Bank',
+      '478245': 'Royal Bank of Scotland',
+      '478246': 'Lloyds Bank UK',
+      '478247': 'NatWest UK',
+      '478248': 'Santander UK',
+      '478249': 'TSB Bank UK',
+      '478250': 'Monzo UK',
+      '478251': 'Starling Bank UK',
+      '478252': 'Revolut UK',
+      '478253': 'N26 Germany',
+      '478254': 'Wirecard Germany',
+      '478255': 'Solarisbank Germany',
+      '478256': 'Comdirect Germany',
+      '478257': 'Postbank Germany',
+      '478258': 'Sparkasse Germany',
+      '478259': 'Volksbank Germany',
+      '478260': 'DKB Germany',
+      '478261': 'ING Germany',
+      '478262': 'Targobank Germany',
+      '478263': 'Santander Consumer Bank Germany',
+      '478264': 'BMW Bank Germany',
+      '478265': 'Mercedes-Benz Bank Germany',
+      '478266': 'Volkswagen Bank Germany',
+      '478267': 'Opel Bank Germany',
+      '478268': 'Renault Bank Germany',
+      '478269': 'Peugeot Bank Germany',
+      '478270': 'Citroën Bank Germany',
+      '478271': 'Fiat Bank Germany',
+      '478272': 'Alfa Romeo Bank Germany',
+      '478273': 'Lancia Bank Germany',
+      '478274': 'Maserati Bank Germany',
+      '478275': 'Ferrari Bank Germany',
+      '478276': 'Lamborghini Bank Germany',
+      '478277': 'Porsche Bank Germany',
+      '478278': 'Audi Bank Germany',
+      '478279': 'BMW Bank Germany',
+      '478280': 'Mercedes-Benz Bank Germany',
+      '478281': 'Volkswagen Bank Germany',
+      '478282': 'American Express Test',
+      '478283': 'Chase',
+      '478284': 'Citi',
+      '478285': 'Wells Fargo',
+      '478286': 'US Bank',
+      '478287': 'TD Bank Canada',
+      '478288': 'Barclays UK',
+      '478289': 'HSBC UK',
+      '478290': 'Discover',
+      '478291': 'Santander Spain',
+      '478292': 'Ally Financial',
+      '478293': 'Santander UK',
+      '478294': 'BNP Paribas France',
+      '478295': 'ING Group Netherlands',
+      '478296': 'Deutsche Bank Germany',
+      '478297': 'Commerzbank Germany',
+      '478298': 'UniCredit Italy',
+      '478299': 'BBVA Spain',
     };
     return banks[bin] || 'Неизвестный';
   }
 
   function getCountryByBin(bin) {
-    // Упрощённо
+    // Только международные страны (без России)
     const countries = {
       '411111': 'USA',
       '555555': 'USA',
@@ -814,49 +810,150 @@ if (window.location.pathname.includes('dashboard.html')) {
       '511234': 'UK',
       '400023': 'USA',
       '547300': 'Spain',
-      '400000': 'Russia',
-      '510000': 'Russia',
-      '400001': 'Russia',
-      '530000': 'Russia',
-      '400002': 'Russia',
-      '540000': 'Russia',
-      '400003': 'Russia',
-      '550000': 'Russia',
-      '400004': 'Russia',
-      '560000': 'Russia',
-      '400006': 'Russia',
-      '570000': 'Russia',
-      '400007': 'Russia',
-      '580000': 'Russia',
-      '400008': 'Russia',
-      '590000': 'Russia',
-      '400010': 'Russia',
-      '500000': 'Russia',
-      '400011': 'Russia',
-      '510001': 'Russia',
-      '400012': 'Russia',
-      '520001': 'Russia',
-      '400013': 'Russia',
-      '530001': 'Russia',
-      '400014': 'Russia',
-      '540001': 'Russia',
-      '400015': 'Russia',
-      '550001': 'Russia',
-      '400016': 'Russia',
-      '560001': 'Russia',
-      '400017': 'Russia',
-      '570001': 'Russia',
-      '400019': 'Russia',
+      '400000': 'USA',
+      '510000': 'UK',
+      '400001': 'France',
+      '530000': 'Netherlands',
+      '400002': 'Germany',
+      '540000': 'Germany',
+      '400003': 'Italy',
+      '550000': 'Spain',
+      '400004': 'Spain',
+      '560000': 'France',
+      '400006': 'France',
+      '570000': 'France',
+      '400007': 'Brazil',
+      '580000': 'Brazil',
+      '400008': 'Brazil',
+      '590000': 'Mexico',
+      '400010': 'Mexico',
+      '500000': 'Japan',
+      '400011': 'Japan',
+      '510001': 'Japan',
+      '400012': 'Japan',
+      '520001': 'China',
+      '400013': 'China',
+      '530001': 'China',
+      '400014': 'China',
+      '540001': 'Hong Kong',
+      '400015': 'Hong Kong',
+      '550001': 'Hong Kong',
+      '400016': 'Singapore',
+      '560001': 'Singapore',
+      '400017': 'Singapore',
+      '570001': 'Australia',
+      '400019': 'Australia',
       '547419': 'USA',
       '542842': 'USA',
       '512345': 'UK',
-      '543210': 'USA',
+      '543210': 'UK',
       '510510': 'USA',
       '540540': 'USA',
       '511234': 'USA',
       '543210': 'USA',
       '510010': 'USA',
       '520002': 'USA',
+      '547301': 'Canada',
+      '478200': 'USA',
+      '478201': 'USA',
+      '478202': 'USA',
+      '478203': 'USA',
+      '478204': 'USA',
+      '478205': 'Canada',
+      '478206': 'UK',
+      '478207': 'UK',
+      '478208': 'USA',
+      '478209': 'Spain',
+      '478210': 'USA',
+      '478211': 'UK',
+      '478212': 'France',
+      '478213': 'Netherlands',
+      '478214': 'Germany',
+      '478215': 'Germany',
+      '478216': 'Italy',
+      '478217': 'Spain',
+      '478218': 'Spain',
+      '478219': 'France',
+      '478220': 'France',
+      '478221': 'France',
+      '478222': 'Brazil',
+      '478223': 'Brazil',
+      '478224': 'Brazil',
+      '478225': 'Mexico',
+      '478226': 'Mexico',
+      '478227': 'Japan',
+      '478228': 'Japan',
+      '478229': 'Japan',
+      '478230': 'Japan',
+      '478231': 'China',
+      '478232': 'China',
+      '478233': 'China',
+      '478234': 'China',
+      '478235': 'Hong Kong',
+      '478236': 'Hong Kong',
+      '478237': 'Hong Kong',
+      '478238': 'Singapore',
+      '478239': 'Singapore',
+      '478240': 'Singapore',
+      '478241': 'Australia',
+      '478242': 'Australia',
+      '478243': 'Australia',
+      '478244': 'Australia',
+      '478245': 'UK',
+      '478246': 'UK',
+      '478247': 'UK',
+      '478248': 'UK',
+      '478249': 'UK',
+      '478250': 'UK',
+      '478251': 'UK',
+      '478252': 'UK',
+      '478253': 'Germany',
+      '478254': 'Germany',
+      '478255': 'Germany',
+      '478256': 'Germany',
+      '478257': 'Germany',
+      '478258': 'Germany',
+      '478259': 'Germany',
+      '478260': 'Germany',
+      '478261': 'Germany',
+      '478262': 'Germany',
+      '478263': 'Germany',
+      '478264': 'Germany',
+      '478265': 'Germany',
+      '478266': 'Germany',
+      '478267': 'Germany',
+      '478268': 'Germany',
+      '478269': 'Germany',
+      '478270': 'Germany',
+      '478271': 'Germany',
+      '478272': 'Germany',
+      '478273': 'Germany',
+      '478274': 'Germany',
+      '478275': 'Germany',
+      '478276': 'Germany',
+      '478277': 'Germany',
+      '478278': 'Germany',
+      '478279': 'Germany',
+      '478280': 'Germany',
+      '478281': 'Germany',
+      '478282': 'USA',
+      '478283': 'USA',
+      '478284': 'USA',
+      '478285': 'USA',
+      '478286': 'USA',
+      '478287': 'Canada',
+      '478288': 'UK',
+      '478289': 'UK',
+      '478290': 'USA',
+      '478291': 'Spain',
+      '478292': 'USA',
+      '478293': 'UK',
+      '478294': 'France',
+      '478295': 'Netherlands',
+      '478296': 'Germany',
+      '478297': 'Germany',
+      '478298': 'Italy',
+      '478299': 'Spain',
     };
     return countries[bin] || 'Неизвестная';
   }
