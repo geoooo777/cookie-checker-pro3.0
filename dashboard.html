@@ -831,8 +831,20 @@
         <div class="card-checker-section">
           <h3>💳 Чекер банковских карт</h3>
           <div class="card-input-section">
-            <input type="text" id="cardNumber" placeholder="Номер карты (16-19 цифр)" maxlength="19">
-            <input type="text" id="cardExpiry" placeholder="Срок действия (MM/YY)" maxlength="5">
+            <div class="card-input-group">
+              <label for="cardNumber" class="card-input-label">
+                <i class="ri-credit-card-line"></i>
+                <span>Номер карты</span>
+              </label>
+              <input type="text" id="cardNumber" placeholder="16-19 цифр" maxlength="19">
+            </div>
+            <div class="card-input-group">
+              <label for="cardExpiry" class="card-input-label">
+                <i class="ri-time-line"></i>
+                <span>Срок действия</span>
+              </label>
+              <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+            </div>
             <button id="checkCardBtn" class="check-card-btn">🔍 Проверить карту</button>
           </div>
           <div id="cardResult" class="card-result-box" style="display:none;">
