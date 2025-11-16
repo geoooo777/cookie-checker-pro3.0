@@ -835,7 +835,42 @@
             <input type="text" id="cardExpiry" placeholder="Срок действия (MM/YY)" maxlength="5">
             <button id="checkCardBtn" class="check-card-btn">🔍 Проверить карту</button>
           </div>
-          <div id="cardResult" class="card-result-box" style="display:none;"></div>
+          <div id="cardResult" class="card-result-box" style="display:none;">
+            <div class="card-info">
+              <div class="card-field">
+                <i class="ri-check-double-line"></i>
+                <span>Номер карты: <span id="cardValid">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-credit-card-line"></i>
+                <span>Тип карты: <span id="cardType">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-hashtag"></i>
+                <span>BIN: <span id="cardBin">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-bank-line"></i>
+                <span>Банк: <span id="cardBank">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-global-line"></i>
+                <span>Страна: <span id="cardCountry">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-file-text-line"></i>
+                <span>Подтип: <span id="cardSubType">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-award-line"></i>
+                <span>Класс: <span id="cardClass">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-time-line"></i>
+                <span>Срок действия: <span id="cardExpiryStatus">-</span></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
