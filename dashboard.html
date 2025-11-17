@@ -772,19 +772,14 @@
       <!-- Основная панель -->
       <div class="main-panel">
         <div class="upload-section">
-          <!-- Карточка куков -->
+          <!-- Карточка вставки куков -->
           <div class="upload-card">
-            <label for="cookieFile" class="file-upload-label">
+            <label for="cookieText" class="file-upload-label">
               <i class="ri-cookie-line"></i>
-              <span>Загрузить файл с куками (.txt)</span>
+              <span>Вставить текст с куками (в формате .txt)</span>
             </label>
-            <input type="file" id="cookieFile" accept=".txt" style="display: none;">
-            <div id="fileInfo" class="file-info" style="display:none;">
-              <p><strong>Файл кук:</strong> <span id="fileName"></span></p>
-              <p><strong>Куки:</strong> <span id="cookieCount">0</span></p>
-              <button id="clearCookiesBtn" class="clear-btn">🗑️ Очистить куки</button>
-              <button id="convertToJSONBtn" class="json-btn">📄 Конвертировать в JSON</button> <!-- NEW BUTTON -->
-            </div>
+            <textarea id="cookieText" placeholder="Вставьте ваш текст с куками здесь..." rows="6"></textarea>
+            <button id="convertToJSONBtn" class="json-btn">📄 Конвертировать в JSON</button>
           </div>
 
           <!-- Карточка паролей -->
