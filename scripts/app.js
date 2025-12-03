@@ -29,6 +29,9 @@ let currentFileName = '';
 let currentPasswordFileName = '';
 let currentMode = 'all'; // 'cookies', 'passwords', 'validate', 'all'
 
+// Для конвертера JSON
+let jsonCookies = [];
+
 // DOM
 const logoutBtn = document.getElementById('logoutBtn');
 const cookieFile = document.getElementById('cookieFile');
@@ -60,7 +63,10 @@ const modeValidateBtn = document.getElementById('modeValidateBtn');
 const modeAllBtn = document.getElementById('modeAllBtn');
 
 // Конвертер кук в JSON
-const cookieTextInput = document.getElementById('cookieTextInput');
+const jsonInputFile = document.getElementById('jsonInputFile');
+const jsonFileInfo = document.getElementById('jsonFileInfo');
+const jsonFileNameSpan = document.getElementById('jsonFileName');
+const jsonCookieCountSpan = document.getElementById('jsonCookieCount');
 const formatJsonBtn = document.getElementById('formatJsonBtn');
 const downloadJsonBtn = document.getElementById('downloadJsonBtn');
 
@@ -510,31 +516,60 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 19. Конвертация кук в JSON
+  // 19. Формат куков по доменам
+  function formatCookiesByDomain(cookies) {
+    const grouped = {};
+    cookies.forEach(c => {
+      if (!grouped[c.domain]) grouped[c.domain] = [];
+      grouped[c.domain].push(`${c.domain}\t${c.flag}\t${c.path}\t${c.secure}\t${c.expiration}\t${c.name}\t${c.value}`);
+    });
+
+    let output = '';
+    for (const domain in grouped) {
+      output += `# ${domain}\n`;
+      output += grouped[domain].join('\n');
+      output += '\n\n';
+    }
+    return output;
+  }
+
+  // 20. Конвертер кук в JSON
+  jsonInputFile.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    jsonFileNameSpan.textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      jsonCookies = parseCookies(text);
+      jsonCookieCountSpan.textContent = jsonCookies.length;
+      jsonFileInfo.style.display = 'block';
+    };
+    reader.readAsText(file);
+  };
+
   formatJsonBtn.onclick = () => {
-    const text = cookieTextInput.value.trim();
-    if (!text) {
-      alert('Введите содержимое файла с куками');
+    if (jsonCookies.length === 0) {
+      alert('Сначала загрузите файл с куками.');
       return;
     }
 
-    const cookies = parseCookies(text);
-    const jsonContent = JSON.stringify(cookies, null, 2);
+    const jsonData = JSON.stringify(jsonCookies, null, 2);
 
-    // Показать кнопку скачивания
-    downloadJsonBtn.style.display = 'block';
-    downloadJsonBtn.onclick = () => {
-      const blob = new Blob([jsonContent], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'cookies.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    };
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cookies_${jsonFileNameSpan.textContent.replace('.txt', '') || 'converted'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert('Куки успешно конвертированы в JSON и скачаны.');
   };
 
-  // 20. Чекер карт
+  // 21. Чекер карт
   checkCardBtn.onclick = () => {
     const number = cardNumberInput.value.replace(/\s/g, '');
     const expiry = cardExpiryInput.value;
@@ -978,14 +1013,14 @@ if (window.location.pathname.includes('dashboard.html')) {
     return classes[bin] || (type === 'American Express' ? 'Premium' : 'Standard');
   }
 
-  // 21. Тема
+  // 22. Тема
   themeToggle.onclick = () => {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   };
 
-  // 22. Выход
+  // 23. Выход
   logoutBtn.onclick = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
