@@ -771,60 +771,75 @@
 
       <!-- Основная панель -->
       <div class="main-panel">
-        <div class="upload-section">
-          <!-- Карточка вставки куков -->
-          <div class="upload-card">
-            <label for="cookieText" class="file-upload-label">
-              <i class="ri-cookie-line"></i>
-              <span>Вставить текст с куками (в формате .txt)</span>
-            </label>
-            <textarea id="cookieText" placeholder="Вставьте ваш текст с куками здесь..." rows="6"></textarea>
-            <button id="convertToJSONBtn" class="json-btn">📄 Конвертировать в JSON</button>
+        <!-- === 1. ЧЕКЕР КУК И ПАРОЛЕЙ === -->
+        <div class="section-block">
+          <h3>🔍 Чекер куков и паролей</h3>
+          <div class="upload-section">
+            <div class="upload-card">
+              <label for="cookieFile" class="file-upload-label">
+                <i class="ri-cookie-line"></i>
+                <span>Загрузить файл с куками (.txt)</span>
+              </label>
+              <input type="file" id="cookieFile" accept=".txt" style="display: none;">
+              <div id="fileInfo" class="file-info" style="display:none;">
+                <p><strong>Файл кук:</strong> <span id="fileName"></span></p>
+                <p><strong>Куки:</strong> <span id="cookieCount">0</span></p>
+                <button id="clearCookiesBtn" class="clear-btn">🗑️ Очистить куки</button>
+              </div>
+            </div>
+
+            <div class="upload-card">
+              <label for="passwordFile" class="file-upload-label">
+                <i class="ri-lock-line"></i>
+                <span>Загрузить файл с паролями (URL:Username:Password)</span>
+              </label>
+              <input type="file" id="passwordFile" accept=".txt" style="display: none;">
+              <div id="passwordInfo" class="file-info" style="display:none;">
+                <p><strong>Файл паролей:</strong> <span id="passwordFileName"></span></p>
+                <p><strong>Пароли:</strong> <span id="passwordCount">0</span></p>
+                <button id="clearPasswordsBtn" class="clear-btn">🗑️ Очистить пароли</button>
+              </div>
+            </div>
           </div>
 
-          <!-- Карточка паролей -->
-          <div class="upload-card">
-            <label for="passwordFile" class="file-upload-label">
-              <i class="ri-lock-line"></i>
-              <span>Загрузить файл с паролями (URL:Username:Password)</span>
-            </label>
-            <input type="file" id="passwordFile" accept=".txt" style="display: none;">
-            <div id="passwordInfo" class="file-info" style="display:none;">
-              <p><strong>Файл паролей:</strong> <span id="passwordFileName"></span></p>
-              <p><strong>Пароли:</strong> <span id="passwordCount">0</span></p>
-              <button id="clearPasswordsBtn" class="clear-btn">🗑️ Очистить пароли</button>
+          <div class="mode-selector">
+            <button id="modeCookiesBtn" class="mode-btn active">🍪 Только куки</button>
+            <button id="modePasswordsBtn" class="mode-btn">🔒 Только пароли</button>
+            <button id="modeValidateBtn" class="mode-btn">✅ Проверить валидность</button>
+            <button id="modeAllBtn" class="mode-btn">🔄 ALL</button>
+          </div>
+
+          <div class="search-section">
+            <input type="text" id="domainFilter" placeholder="Введите домен вручную, например: facebook.com">
+            <button id="searchBtn" class="search-btn">🔍 Найти</button>
+          </div>
+
+          <div class="result-section">
+            <div class="result-header">
+              <h3>Результаты</h3>
+              <div id="resultCount" class="count">Найдено: 0</div>
+            </div>
+            <pre id="resultDisplay" class="result-box"></pre>
+            <div class="result-actions">
+              <button id="copyBtn" class="action-btn">📋 Копировать</button>
+              <button id="downloadBtn" class="action-btn" style="display:none;">💾 Скачать куки</button>
+              <button id="downloadPasswordsBtn" class="action-btn" style="display:none;">🔒 Скачать пароли</button>
             </div>
           </div>
         </div>
 
-        <!-- Режимы -->
-        <div class="mode-selector">
-          <button id="modeCookiesBtn" class="mode-btn active">🍪 Только куки</button>
-          <button id="modePasswordsBtn" class="mode-btn">🔒 Только пароли</button>
-          <button id="modeValidateBtn" class="mode-btn">✅ Проверить валидность</button>
-          <button id="modeAllBtn" class="mode-btn">🔄 ALL</button>
-        </div>
-
-        <div class="search-section">
-          <input type="text" id="domainFilter" placeholder="Введите домен вручную, например: facebook.com">
-          <button id="searchBtn" class="search-btn">🔍 Найти</button>
-        </div>
-
-        <div class="result-section">
-          <div class="result-header">
-            <h3>Результаты</h3>
-            <div id="resultCount" class="count">Найдено: 0</div>
-          </div>
-          <pre id="resultDisplay" class="result-box"></pre>
-          <div class="result-actions">
-            <button id="copyBtn" class="action-btn">📋 Копировать</button>
-            <button id="downloadBtn" class="action-btn" style="display:none;">💾 Скачать куки</button>
-            <button id="downloadPasswordsBtn" class="action-btn" style="display:none;">🔒 Скачать пароли</button>
+        <!-- === 2. КОНВЕРТЕР КУК В JSON === -->
+        <div class="section-block">
+          <h3>📄 Конвертер куков в JSON</h3>
+          <div class="converter-section">
+            <textarea id="cookieTextInput" placeholder="Вставьте содержимое файла с куками сюда..."></textarea>
+            <button id="formatJsonBtn" class="format-btn">📄 Форматировать в JSON</button>
+            <button id="downloadJsonBtn" class="download-json-btn" style="display:none;">📥 Скачать JSON</button>
           </div>
         </div>
 
-        <!-- Чекер карт -->
-        <div class="card-checker-section">
+        <!-- === 3. ЧЕКЕР КАРТ === -->
+        <div class="section-block">
           <h3>💳 Чекер банковских карт</h3>
           <div class="card-input-section">
             <div class="card-input-group">
