@@ -840,6 +840,7 @@
             <div id="jsonFileInfo" class="file-info" style="display:none;">
               <p><strong>Файл кук:</strong> <span id="jsonFileName"></span></p>
               <p><strong>Куки:</strong> <span id="jsonCookieCount">0</span></p>
+              <button id="clearJsonCookiesBtn" class="clear-btn">🗑️ Очистить куки</button>
             </div>
             <button id="formatJsonBtn" class="format-btn">📄 Форматировать в JSON</button>
             <button id="downloadJsonBtn" class="download-json-btn" style="display:none;">📥 Скачать JSON</button>
@@ -899,6 +900,14 @@
               <div class="card-field">
                 <i class="ri-time-line"></i>
                 <span>Срок действия: <span id="cardExpiryStatus">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-wallet-line"></i>
+                <span>Prepaid: <span id="cardPrepaid">-</span></span>
+              </div>
+              <div class="card-field">
+                <i class="ri-link"></i>
+                <span>Сайт банка: <span id="cardBankUrl">-</span></span>
               </div>
             </div>
           </div>
