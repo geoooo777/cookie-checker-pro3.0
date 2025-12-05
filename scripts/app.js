@@ -29,6 +29,9 @@ let currentFileName = '';
 let currentPasswordFileName = '';
 let currentMode = 'all'; // 'cookies', 'passwords', 'validate', 'all'
 
+// База BIN
+let BIN_DB = null;
+
 // DOM
 const logoutBtn = document.getElementById('logoutBtn');
 const cookieFile = document.getElementById('cookieFile');
@@ -60,7 +63,11 @@ const modeValidateBtn = document.getElementById('modeValidateBtn');
 const modeAllBtn = document.getElementById('modeAllBtn');
 
 // Конвертер кук в JSON
-const cookieTextInput = document.getElementById('cookieTextInput');
+const jsonInputFile = document.getElementById('jsonInputFile');
+const jsonFileInfo = document.getElementById('jsonFileInfo');
+const jsonFileNameSpan = document.getElementById('jsonFileName');
+const jsonCookieCountSpan = document.getElementById('jsonCookieCount');
+const clearJsonCookiesBtn = document.getElementById('clearJsonCookiesBtn');
 const formatJsonBtn = document.getElementById('formatJsonBtn');
 const downloadJsonBtn = document.getElementById('downloadJsonBtn');
 
@@ -127,12 +134,21 @@ if (window.location.pathname.includes('dashboard.html')) {
     window.location.href = 'auth.html';
   }
 
-  // 1. Тема (загрузка из localStorage)
+  // 1. Загрузка темы
   if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-theme');
   }
 
-  // 2. Режимы
+  // 2. Загрузка базы BIN
+  async function loadBinDatabase() {
+    if (BIN_DB) return;
+    console.log("Загружаем базу BIN (38 MB) — безопасно с jsDelivr...");
+    const response = await fetch("https://cdn.jsdelivr.net/gh/iannuttall/binlist-data@latest/binlist.json");
+    BIN_DB = await response.json();
+    console.log("База загружена:", BIN_DB.length, "диапазонов");
+  }
+
+  // 3. Режимы
   modeCookiesBtn.onclick = () => {
     currentMode = 'cookies';
     setActiveModeButton(modeCookiesBtn);
@@ -162,7 +178,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     activeBtn.classList.add('active');
   }
 
-  // 3. Загрузка куков
+  // 4. Загрузка куков
   cookieFile.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -181,7 +197,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     reader.readAsText(file);
   };
 
-  // 4. Загрузка паролей
+  // 5. Загрузка паролей
   passwordFile.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -200,7 +216,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     reader.readAsText(file);
   };
 
-  // 5. Парсинг куков
+  // 6. Парсинг куков
   function parseCookies(text) {
     return text.split('\n')
       .filter(line => !line.startsWith('#') && line.trim() !== '')
@@ -210,7 +226,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       });
   }
 
-  // 6. Парсинг паролей
+  // 7. Парсинг паролей
   function parsePasswords(text) {
     const entries = text.split('===============');
     const parsed = [];
@@ -250,7 +266,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return parsed;
   }
 
-  // 7. Очистка куков
+  // 8. Очистка куков
   clearCookiesBtn.onclick = () => {
     cookies = [];
     filteredCookies = [];
@@ -270,7 +286,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     alert('Куки очищены');
   };
 
-  // 8. Очистка паролей
+  // 9. Очистка паролей
   clearPasswordsBtn.onclick = () => {
     passwords = [];
     filteredPasswords = [];
@@ -290,7 +306,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     alert('Пароли очищены');
   };
 
-  // 9. Валидация кук и паролей
+  // 10. Валидация кук и паролей
   function validateCredentials() {
     if (cookies.length === 0 || passwords.length === 0) {
       resultDisplay.textContent = 'Для проверки валидности нужно загрузить и куки, и пароли.';
@@ -319,7 +335,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     downloadPasswordsBtn.style.display = 'none';
   }
 
-  // 10. Формат валидных куки/паролей
+  // 11. Формат валидных куки/паролей
   function formatValidatedCredentials(credentials) {
     let output = '';
     credentials.forEach(c => {
@@ -331,7 +347,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 11. Фильтрация по нескольким доменам
+  // 12. Фильтрация по нескольким доменам
   function filterByDomains(domains) {
     filteredCookies = cookies.filter(c => domains.some(d => c.domain.includes(d)));
     filteredPasswords = passwords.filter(p => domains.some(d => p.domain.includes(d)));
@@ -356,7 +372,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 12. Формат результатов (куки + пароли)
+  // 13. Формат результатов (куки + пароли)
   function formatResults(cookies, passwords) {
     let output = '';
 
@@ -388,7 +404,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 13. Формат только паролей
+  // 14. Формат только паролей
   function formatPasswords(passwords) {
     let output = '';
     passwords.forEach(p => {
@@ -401,7 +417,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 14. Обработчики фильтров
+  // 15. Обработчики фильтров
   filterItems.forEach((item, index) => {
     item.onclick = () => {
       const checkbox = filterCheckboxes[index];
@@ -466,20 +482,20 @@ if (window.location.pathname.includes('dashboard.html')) {
     }
   }
 
-  // 15. Ручной поиск
+  // 16. Ручной поиск
   searchBtn.onclick = () => {
     const domain = domainFilter.value.trim();
     if (!domain) return;
     filterByDomains([domain]);
   };
 
-  // 16. Копирование
+  // 17. Копирование
   copyBtn.onclick = () => {
     navigator.clipboard.writeText(resultDisplay.textContent);
     alert('Скопировано в буфер обмена');
   };
 
-  // 17. Скачивание куков
+  // 18. Скачивание куков
   downloadBtn.onclick = () => {
     const content = formatCookiesByDomain(filteredCookies);
     const blob = new Blob([content], { type: 'text/plain' });
@@ -491,7 +507,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 18. Скачивание паролей
+  // 19. Скачивание паролей
   downloadPasswordsBtn.onclick = () => {
     let content = '';
     filteredPasswords.forEach(p => {
@@ -510,7 +526,7 @@ if (window.location.pathname.includes('dashboard.html')) {
     URL.revokeObjectURL(url);
   };
 
-  // 19. Формат куков по доменам
+  // 20. Формат куков по доменам
   function formatCookiesByDomain(cookies) {
     const grouped = {};
     cookies.forEach(c => {
@@ -527,61 +543,80 @@ if (window.location.pathname.includes('dashboard.html')) {
     return output;
   }
 
-  // 20. Конвертер кук в JSON
-  formatJsonBtn.onclick = () => {
-    const text = cookieTextInput.value.trim();
-    if (!text) {
-      alert('Введите содержимое файла с куками');
-      return;
-    }
+  // 21. Конвертер кук в JSON
+  jsonInputFile.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    const rawCookies = parseCookies(text);
-    const jsonContent = JSON.stringify(rawCookies, null, 2);
+    jsonFileNameSpan.textContent = file.name;
 
-    // Показать кнопку скачивания
-    downloadJsonBtn.style.display = 'block';
-    downloadJsonBtn.onclick = () => {
-      const blob = new Blob([jsonContent], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'cookies.json';
-      a.click();
-      URL.revokeObjectURL(url);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      const rawCookies = parseCookies(text);
+
+      // Показать информацию
+      jsonCookieCountSpan.textContent = rawCookies.length;
+      jsonFileInfo.style.display = 'block';
+
+      // При нажатии на "Форматировать в JSON"
+      formatJsonBtn.onclick = () => {
+        const jsonData = JSON.stringify(rawCookies, null, 2);
+
+        // Показать кнопку скачивания
+        downloadJsonBtn.style.display = 'block';
+
+        // При нажатии на скачивание
+        downloadJsonBtn.onclick = () => {
+          const blob = new Blob([jsonData], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `cookies_${file.name.replace('.txt', '') || 'converted'}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+        };
+
+        alert('Куки успешно конвертированы в JSON и скачаны.');
+      };
     };
+    reader.readAsText(file);
   };
 
-  // 21. Тема
+  // 22. Очистка куков в конвертере
+  clearJsonCookiesBtn.onclick = () => {
+    jsonFileNameSpan.textContent = '';
+    jsonCookieCountSpan.textContent = '0';
+    jsonFileInfo.style.display = 'none';
+    formatJsonBtn.onclick = null;
+    downloadJsonBtn.style.display = 'none';
+    alert('Куки очищены');
+  };
+
+  // 23. Тема
   themeToggle.onclick = () => {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   };
 
-  // 22. Выход
+  // 24. Выход
   logoutBtn.onclick = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
     window.location.href = 'auth.html';
   };
 
-  // 23. Авто-`/` в сроке действия карты
-  cardExpiryInput.oninput = (e) => {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length >= 2) {
-      value = value.substring(0, 2) + '/' + value.substring(2, 4);
-    }
-    e.target.value = value;
-  };
+  // 25. Чекер карт
+  checkCardBtn.onclick = async () => {
+    await loadBinDatabase(); // Загружаем базу, если ещё не загружена
 
-  // 24. Чекер карт
-  checkCardBtn.onclick = () => {
     const number = cardNumberInput.value.replace(/\s/g, '');
     const expiry = cardExpiryInput.value;
 
     if (!number || !expiry) {
       cardResult.style.display = 'block';
-      cardValidSpan.textContent = 'Введите номер карты и срок действия.';
+      cardValidSpan.innerHTML = 'Введите номер карты и срок действия.';
       cardTypeSpan.textContent = '-';
       cardBinSpan.textContent = '-';
       cardBankSpan.textContent = '-';
@@ -592,52 +627,54 @@ if (window.location.pathname.includes('dashboard.html')) {
       return;
     }
 
-    const result = analyzeCard(number, expiry);
+    const result = analyzeCardWithBinDb(number, expiry);
     cardResult.style.display = 'block';
   };
 
-  function analyzeCard(number, expiry) {
+  function analyzeCardWithBinDb(number, expiry) {
     // Валидация номера (алгоритм Луна)
     const isValid = luhnValidate(number);
-    cardValidSpan.textContent = isValid ? 'ВАЛИДЕН' : 'НЕВАЛИДЕН';
+    cardValidSpan.innerHTML = isValid ? '<span style="color:#00ff88;">ВАЛИДЕН 🟢</span>' : '<span style="color:#ff0066;">НЕВАЛИДЕН 🔴</span>';
 
     // Определение типа карты
     const cardType = getCardType(number);
     cardTypeSpan.textContent = cardType;
 
     // Определение BIN
-    const bin = number.substring(0, 6);
+    const bin = number.substring(0, 8); // Используем 8 символов для поиска в базе
     cardBinSpan.textContent = bin;
 
-    // Определение банка (только международные)
-    const bank = getBankByBin(bin);
-    cardBankSpan.textContent = bank;
+    // Поиск информации по BIN в базе
+    const binInfo = findBinInfo(bin);
 
-    // Определение страны (только международные)
-    const country = getCountryByBin(bin);
-    cardCountrySpan.textContent = country;
-
-    // Определение типа (кредит/дебет)
-    const cardSubType = getCardSubType(bin);
-    cardSubTypeSpan.textContent = cardSubType;
-
-    // Определение класса карты (только международные)
-    const cardClass = getCardClass(bin, cardType);
-    cardClassSpan.textContent = cardClass;
-
-    // Проверка срока действия
-    const [expMonth, expYear] = expiry.split('/');
-    const now = new Date();
-    const currentYear = now.getFullYear() % 100;
-    const currentMonth = now.getMonth() + 1;
-
-    if (parseInt(expYear) < currentYear || (parseInt(expYear) === currentYear && parseInt(expMonth) < currentMonth)) {
-      cardExpiryStatusSpan.textContent = 'ПРОСРОЧЕН';
+    if (binInfo) {
+      cardBankSpan.textContent = binInfo.bank_name || 'Неизвестный';
+      cardCountrySpan.innerHTML = `${binInfo.country_name || 'Неизвестно'} ${countryToFlag(binInfo.country_alpha2)}`;
+      cardSubTypeSpan.textContent = binInfo.card_type || 'Неизвестный';
+      cardClassSpan.textContent = binInfo.card_category || 'Standard';
+      cardExpiryStatusSpan.textContent = checkExpiry(expiry) ? 'АКТУАЛЕН' : 'ПРОСРОЧЕН';
     } else {
-      cardExpiryStatusSpan.textContent = 'АКТУАЛЕН';
+      cardBankSpan.textContent = 'Неизвестный';
+      cardCountrySpan.textContent = 'Неизвестно';
+      cardSubTypeSpan.textContent = 'Неизвестный';
+      cardClassSpan.textContent = 'Standard';
+      cardExpiryStatusSpan.textContent = 'ПРОСРОЧЕН';
     }
 
     return '';
+  }
+
+  function findBinInfo(bin) {
+    // Ищем в базе BIN
+    // bin — строка (например, "47820012")
+    // range_start и range_end — числа (например, 47820000 и 47820099)
+    const binAsNumber = parseInt(bin.padEnd(8, '0')); // Приведём к 8 символам (дополнив нулями)
+
+    return BIN_DB.find(entry => {
+      const start = parseInt(entry.range_start);
+      const end = parseInt(entry.range_end);
+      return binAsNumber >= start && binAsNumber <= end;
+    }) || null;
   }
 
   function luhnValidate(cardNumber) {
@@ -665,659 +702,23 @@ if (window.location.pathname.includes('dashboard.html')) {
     return 'Неизвестный';
   }
 
-  function getBankByBin(bin) {
-    // Только международные банки (без российских)
-    const banks = {
-      '411111': 'Visa Test',
-      '555555': 'Mastercard Test',
-      '378282': 'American Express Test',
-      '520082': 'Capital One',
-      '400005': 'Chase',
-      '545454': 'Citi',
-      '511234': 'Wells Fargo',
-      '511111': 'Barclays UK',
-      '402400': 'US Bank',
-      '542418': 'TD Bank Canada',
-      '400018': 'Bank of America',
-      '511234': 'HSBC UK',
-      '400023': 'Discover',
-      '547300': 'Santander Spain',
-      '400000': 'Ally Financial',
-      '510000': 'Santander UK',
-      '400001': 'BNP Paribas France',
-      '530000': 'ING Group Netherlands',
-      '400002': 'Deutsche Bank Germany',
-      '540000': 'Commerzbank Germany',
-      '400003': 'UniCredit Italy',
-      '550000': 'BBVA Spain',
-      '400004': 'CaixaBank Spain',
-      '560000': 'Crédit Agricole France',
-      '400006': 'Société Générale France',
-      '570000': 'AXA Banque France',
-      '400007': 'Banco do Brasil',
-      '580000': 'Itaú Unibanco Brazil',
-      '400008': 'Bradesco Brazil',
-      '590000': 'Santander Mexico',
-      '400010': 'Banamex Mexico',
-      '500000': 'Mitsubishi UFJ Japan',
-      '400011': 'Sumitomo Mitsui Japan',
-      '510001': 'Mizuho Bank Japan',
-      '400012': 'SMBC Card Japan',
-      '520001': 'China Construction Bank',
-      '400013': 'Industrial and Commercial Bank of China',
-      '530001': 'Agricultural Bank of China',
-      '400014': 'Bank of China',
-      '540001': 'HSBC Hong Kong',
-      '400015': 'Standard Chartered Hong Kong',
-      '550001': 'Bank of East Asia Hong Kong',
-      '400016': 'OCBC Singapore',
-      '560001': 'DBS Bank Singapore',
-      '400017': 'UOB Singapore',
-      '570001': 'Commonwealth Bank Australia',
-      '400019': 'Westpac Australia',
-      '547419': 'Chase',
-      '542842': 'Citi',
-      '512345': 'Barclays UK',
-      '543210': 'HSBC UK',
-      '510510': 'American Express',
-      '540540': 'Discover',
-      '511234': 'Capital One',
-      '543210': 'Wells Fargo',
-      '510010': 'Bank of America',
-      '520002': 'US Bank',
-      '547301': 'TD Bank Canada',
-
-      // Добавь новые BIN-ы
-      '478200': 'Bank of America',
-      '478201': 'Chase',
-      '478202': 'Citi',
-      '478203': 'Wells Fargo',
-      '478204': 'US Bank',
-      '478205': 'TD Bank Canada',
-      '478206': 'Barclays UK',
-      '478207': 'HSBC UK',
-      '478208': 'Discover',
-      '478209': 'Santander Spain',
-      '478210': 'Ally Financial',
-      '478211': 'Santander UK',
-      '478212': 'BNP Paribas France',
-      '478213': 'ING Group Netherlands',
-      '478214': 'Deutsche Bank Germany',
-      '478215': 'Commerzbank Germany',
-      '478216': 'UniCredit Italy',
-      '478217': 'BBVA Spain',
-      '478218': 'CaixaBank Spain',
-      '478219': 'Crédit Agricole France',
-      '478220': 'Société Générale France',
-      '478221': 'AXA Banque France',
-      '478222': 'Banco do Brasil',
-      '478223': 'Itaú Unibanco Brazil',
-      '478224': 'Bradesco Brazil',
-      '478225': 'Santander Mexico',
-      '478226': 'Banamex Mexico',
-      '478227': 'Mitsubishi UFJ Japan',
-      '478228': 'Sumitomo Mitsui Japan',
-      '478229': 'Mizuho Bank Japan',
-      '478230': 'SMBC Card Japan',
-      '478231': 'China Construction Bank',
-      '478232': 'Industrial and Commercial Bank of China',
-      '478233': 'Agricultural Bank of China',
-      '478234': 'Bank of China',
-      '478235': 'HSBC Hong Kong',
-      '478236': 'Standard Chartered Hong Kong',
-      '478237': 'Bank of East Asia Hong Kong',
-      '478238': 'OCBC Singapore',
-      '478239': 'DBS Bank Singapore',
-      '478240': 'UOB Singapore',
-      '478241': 'Commonwealth Bank Australia',
-      '478242': 'Westpac Australia',
-      '478243': 'ANZ Australia',
-      '478244': 'National Australia Bank',
-      '478245': 'Royal Bank of Scotland',
-      '478246': 'Lloyds Bank UK',
-      '478247': 'NatWest UK',
-      '478248': 'Santander UK',
-      '478249': 'TSB Bank UK',
-      '478250': 'Monzo UK',
-      '478251': 'Starling Bank UK',
-      '478252': 'Revolut UK',
-      '478253': 'N26 Germany',
-      '478254': 'Wirecard Germany',
-      '478255': 'Solarisbank Germany',
-      '478256': 'Comdirect Germany',
-      '478257': 'Postbank Germany',
-      '478258': 'Sparkasse Germany',
-      '478259': 'Volksbank Germany',
-      '478260': 'DKB Germany',
-      '478261': 'ING Germany',
-      '478262': 'Targobank Germany',
-      '478263': 'Santander Consumer Bank Germany',
-      '478264': 'BMW Bank Germany',
-      '478265': 'Mercedes-Benz Bank Germany',
-      '478266': 'Volkswagen Bank Germany',
-      '478267': 'Opel Bank Germany',
-      '478268': 'Renault Bank Germany',
-      '478269': 'Peugeot Bank Germany',
-      '478270': 'Citroën Bank Germany',
-      '478271': 'Fiat Bank Germany',
-      '478272': 'Alfa Romeo Bank Germany',
-      '478273': 'Lancia Bank Germany',
-      '478274': 'Maserati Bank Germany',
-      '478275': 'Ferrari Bank Germany',
-      '478276': 'Lamborghini Bank Germany',
-      '478277': 'Porsche Bank Germany',
-      '478278': 'Audi Bank Germany',
-      '478279': 'BMW Bank Germany',
-      '478280': 'Mercedes-Benz Bank Germany',
-      '478281': 'Volkswagen Bank Germany',
-      '478282': 'American Express Test',
-      '478283': 'Chase',
-      '478284': 'Citi',
-      '478285': 'Wells Fargo',
-      '478286': 'US Bank',
-      '478287': 'TD Bank Canada',
-      '478288': 'Barclays UK',
-      '478289': 'HSBC UK',
-      '478290': 'Discover',
-      '478291': 'Santander Spain',
-      '478292': 'Ally Financial',
-      '478293': 'Santander UK',
-      '478294': 'BNP Paribas France',
-      '478295': 'ING Group Netherlands',
-      '478296': 'Deutsche Bank Germany',
-      '478297': 'Commerzbank Germany',
-      '478298': 'UniCredit Italy',
-      '478299': 'BBVA Spain',
-    };
-    return banks[bin] || 'Неизвестный';
+  function countryToFlag(countryCode) {
+    if (!countryCode) return '';
+    return countryCode.toUpperCase().replace(/./g, char =>
+      String.fromCodePoint(0x1F1E6 + char.charCodeAt(0) - 65)
+    );
   }
 
-  function getCountryByBin(bin) {
-    // Только международные страны (без России)
-    const countries = {
-      '411111': 'USA',
-      '555555': 'USA',
-      '378282': 'USA',
-      '520082': 'USA',
-      '400005': 'USA',
-      '545454': 'USA',
-      '453999': 'USA',
-      '511111': 'UK',
-      '402400': 'USA',
-      '542418': 'Canada',
-      '400018': 'USA',
-      '511234': 'UK',
-      '400023': 'USA',
-      '547300': 'Spain',
-      '400000': 'USA',
-      '510000': 'UK',
-      '400001': 'France',
-      '530000': 'Netherlands',
-      '400002': 'Germany',
-      '540000': 'Germany',
-      '400003': 'Italy',
-      '550000': 'Spain',
-      '400004': 'Spain',
-      '560000': 'France',
-      '400006': 'France',
-      '570000': 'France',
-      '400007': 'Brazil',
-      '580000': 'Brazil',
-      '400008': 'Brazil',
-      '590000': 'Mexico',
-      '400010': 'Mexico',
-      '500000': 'Japan',
-      '400011': 'Japan',
-      '510001': 'Japan',
-      '400012': 'Japan',
-      '520001': 'China',
-      '400013': 'China',
-      '530001': 'China',
-      '400014': 'China',
-      '540001': 'Hong Kong',
-      '400015': 'Hong Kong',
-      '550001': 'Hong Kong',
-      '400016': 'Singapore',
-      '560001': 'Singapore',
-      '400017': 'Singapore',
-      '570001': 'Australia',
-      '400019': 'Australia',
-      '547419': 'USA',
-      '542842': 'USA',
-      '512345': 'UK',
-      '543210': 'UK',
-      '510510': 'USA',
-      '540540': 'USA',
-      '511234': 'USA',
-      '543210': 'UK',
-      '510010': 'USA',
-      '520002': 'USA',
-      '547301': 'Canada',
-      '478200': 'USA',
-      '478201': 'USA',
-      '478202': 'USA',
-      '478203': 'USA',
-      '478204': 'USA',
-      '478205': 'Canada',
-      '478206': 'UK',
-      '478207': 'UK',
-      '478208': 'USA',
-      '478209': 'Spain',
-      '478210': 'USA',
-      '478211': 'UK',
-      '478212': 'France',
-      '478213': 'Netherlands',
-      '478214': 'Germany',
-      '478215': 'Germany',
-      '478216': 'Italy',
-      '478217': 'Spain',
-      '478218': 'Spain',
-      '478219': 'France',
-      '478220': 'France',
-      '478221': 'France',
-      '478222': 'Brazil',
-      '478223': 'Brazil',
-      '478224': 'Brazil',
-      '478225': 'Mexico',
-      '478226': 'Mexico',
-      '478227': 'Japan',
-      '478228': 'Japan',
-      '478229': 'Japan',
-      '478230': 'Japan',
-      '478231': 'China',
-      '478232': 'China',
-      '478233': 'China',
-      '478234': 'China',
-      '478235': 'Hong Kong',
-      '478236': 'Hong Kong',
-      '478237': 'Hong Kong',
-      '478238': 'Singapore',
-      '478239': 'Singapore',
-      '478240': 'Singapore',
-      '478241': 'Australia',
-      '478242': 'Australia',
-      '478243': 'Australia',
-      '478244': 'Australia',
-      '478245': 'UK',
-      '478246': 'UK',
-      '478247': 'UK',
-      '478248': 'UK',
-      '478249': 'UK',
-      '478250': 'UK',
-      '478251': 'UK',
-      '478252': 'UK',
-      '478253': 'Germany',
-      '478254': 'Germany',
-      '478255': 'Germany',
-      '478256': 'Germany',
-      '478257': 'Germany',
-      '478258': 'Germany',
-      '478259': 'Germany',
-      '478260': 'Germany',
-      '478261': 'Germany',
-      '478262': 'Germany',
-      '478263': 'Germany',
-      '478264': 'Germany',
-      '478265': 'Germany',
-      '478266': 'Germany',
-      '478267': 'Germany',
-      '478268': 'Germany',
-      '478269': 'Germany',
-      '478270': 'Germany',
-      '478271': 'Germany',
-      '478272': 'Germany',
-      '478273': 'Germany',
-      '478274': 'Germany',
-      '478275': 'Germany',
-      '478276': 'Germany',
-      '478277': 'Germany',
-      '478278': 'Germany',
-      '478279': 'Germany',
-      '478280': 'Germany',
-      '478281': 'Germany',
-      '478282': 'USA',
-      '478283': 'USA',
-      '478284': 'USA',
-      '478285': 'USA',
-      '478286': 'USA',
-      '478287': 'Canada',
-      '478288': 'UK',
-      '478289': 'UK',
-      '478290': 'USA',
-      '478291': 'Spain',
-      '478292': 'USA',
-      '478293': 'UK',
-      '478294': 'France',
-      '478295': 'Netherlands',
-      '478296': 'Germany',
-      '478297': 'Germany',
-      '478298': 'Italy',
-      '478299': 'Spain',
-    };
-    return countries[bin] || 'Неизвестная';
-  }
+  function checkExpiry(expiry) {
+    const [expMonth, expYear] = expiry.split('/');
+    const now = new Date();
+    const currentYear = now.getFullYear() % 100;
+    const currentMonth = now.getMonth() + 1;
 
-  function getCardSubType(bin) {
-    // Упрощённо
-    const types = {
-      '520082': 'Credit',
-      '400005': 'Credit',
-      '545454': 'Credit',
-      '453999': 'Credit',
-      '511111': 'Credit',
-      '402400': 'Debit',
-      '542418': 'Credit',
-      '400018': 'Debit',
-      '511234': 'Credit',
-      '400023': 'Credit',
-      '547300': 'Debit',
-      '400000': 'Debit',
-      '510000': 'Credit',
-      '400001': 'Debit',
-      '530000': 'Credit',
-      '400002': 'Credit',
-      '540000': 'Credit',
-      '400003': 'Debit',
-      '550000': 'Credit',
-      '400004': 'Debit',
-      '560000': 'Credit',
-      '400006': 'Credit',
-      '570000': 'Debit',
-      '400007': 'Credit',
-      '580000': 'Debit',
-      '400008': 'Debit',
-      '590000': 'Credit',
-      '400010': 'Credit',
-      '500000': 'Credit',
-      '400011': 'Debit',
-      '510001': 'Credit',
-      '400012': 'Credit',
-      '520001': 'Debit',
-      '400013': 'Credit',
-      '530001': 'Debit',
-      '400014': 'Credit',
-      '540001': 'Debit',
-      '400015': 'Debit',
-      '550001': 'Credit',
-      '400016': 'Credit',
-      '560001': 'Credit',
-      '400017': 'Credit',
-      '570001': 'Debit',
-      '400019': 'Debit',
-      '547419': 'Credit',
-      '542842': 'Credit',
-      '512345': 'Credit',
-      '543210': 'Credit',
-      '510510': 'Credit',
-      '540540': 'Credit',
-      '511234': 'Credit',
-      '543210': 'Credit',
-      '510010': 'Credit',
-      '520002': 'Credit',
-      '547301': 'Credit',
-      '478200': 'Credit',
-      '478201': 'Credit',
-      '478202': 'Credit',
-      '478203': 'Credit',
-      '478204': 'Credit',
-      '478205': 'Credit',
-      '478206': 'Credit',
-      '478207': 'Credit',
-      '478208': 'Credit',
-      '478209': 'Credit',
-      '478210': 'Credit',
-      '478211': 'Credit',
-      '478212': 'Credit',
-      '478213': 'Credit',
-      '478214': 'Credit',
-      '478215': 'Credit',
-      '478216': 'Credit',
-      '478217': 'Credit',
-      '478218': 'Credit',
-      '478219': 'Credit',
-      '478220': 'Credit',
-      '478221': 'Credit',
-      '478222': 'Credit',
-      '478223': 'Credit',
-      '478224': 'Credit',
-      '478225': 'Credit',
-      '478226': 'Credit',
-      '478227': 'Credit',
-      '478228': 'Credit',
-      '478229': 'Credit',
-      '478230': 'Credit',
-      '478231': 'Credit',
-      '478232': 'Credit',
-      '478233': 'Credit',
-      '478234': 'Credit',
-      '478235': 'Credit',
-      '478236': 'Credit',
-      '478237': 'Credit',
-      '478238': 'Credit',
-      '478239': 'Credit',
-      '478240': 'Credit',
-      '478241': 'Credit',
-      '478242': 'Credit',
-      '478243': 'Credit',
-      '478244': 'Credit',
-      '478245': 'Credit',
-      '478246': 'Credit',
-      '478247': 'Credit',
-      '478248': 'Credit',
-      '478249': 'Credit',
-      '478250': 'Credit',
-      '478251': 'Credit',
-      '478252': 'Credit',
-      '478253': 'Credit',
-      '478254': 'Credit',
-      '478255': 'Credit',
-      '478256': 'Credit',
-      '478257': 'Credit',
-      '478258': 'Credit',
-      '478259': 'Credit',
-      '478260': 'Credit',
-      '478261': 'Credit',
-      '478262': 'Credit',
-      '478263': 'Credit',
-      '478264': 'Credit',
-      '478265': 'Credit',
-      '478266': 'Credit',
-      '478267': 'Credit',
-      '478268': 'Credit',
-      '478269': 'Credit',
-      '478270': 'Credit',
-      '478271': 'Credit',
-      '478272': 'Credit',
-      '478273': 'Credit',
-      '478274': 'Credit',
-      '478275': 'Credit',
-      '478276': 'Credit',
-      '478277': 'Credit',
-      '478278': 'Credit',
-      '478279': 'Credit',
-      '478280': 'Credit',
-      '478281': 'Credit',
-      '478282': 'Credit',
-      '478283': 'Credit',
-      '478284': 'Credit',
-      '478285': 'Credit',
-      '478286': 'Credit',
-      '478287': 'Credit',
-      '478288': 'Credit',
-      '478289': 'Credit',
-      '478290': 'Credit',
-      '478291': 'Credit',
-      '478292': 'Credit',
-      '478293': 'Credit',
-      '478294': 'Credit',
-      '478295': 'Credit',
-      '478296': 'Credit',
-      '478297': 'Credit',
-      '478298': 'Credit',
-      '478299': 'Credit',
-    };
-    return types[bin] || 'Неизвестный';
-  }
-
-  function getCardClass(bin, type) {
-    // Упрощённо
-    const classes = {
-      '520082': 'Travel Rewards',
-      '400005': 'Cash Back',
-      '545454': 'Business',
-      '453999': 'Standard',
-      '511111': 'Premium',
-      '402400': 'Standard',
-      '542418': 'Business',
-      '400018': 'Standard',
-      '511234': 'Premium',
-      '400023': 'Standard',
-      '547300': 'Standard',
-      '400000': 'Standard',
-      '510000': 'Premium',
-      '400001': 'Standard',
-      '530000': 'Premium',
-      '400002': 'Premium',
-      '540000': 'Standard',
-      '400003': 'Standard',
-      '550000': 'Standard',
-      '400004': 'Standard',
-      '560000': 'Premium',
-      '400006': 'Premium',
-      '570000': 'Standard',
-      '400007': 'Premium',
-      '580000': 'Standard',
-      '400008': 'Standard',
-      '590000': 'Premium',
-      '400010': 'Standard',
-      '500000': 'Premium',
-      '400011': 'Standard',
-      '510001': 'Standard',
-      '400012': 'Standard',
-      '520001': 'Standard',
-      '400013': 'Premium',
-      '530001': 'Standard',
-      '400014': 'Premium',
-      '540001': 'Standard',
-      '400015': 'Standard',
-      '550001': 'Premium',
-      '400016': 'Premium',
-      '560001': 'Premium',
-      '400017': 'Travel Rewards',
-      '570001': 'Standard',
-      '400019': 'Standard',
-      '547419': 'Cash Back',
-      '542842': 'Travel Rewards',
-      '512345': 'Premium',
-      '543210': 'Business',
-      '510510': 'Premium',
-      '540540': 'Cash Back',
-      '511234': 'Business',
-      '543210': 'Premium',
-      '510010': 'Standard',
-      '520002': 'Business',
-      '547301': 'Premium',
-      '478200': 'Standard',
-      '478201': 'Cash Back',
-      '478202': 'Premium',
-      '478203': 'Travel Rewards',
-      '478204': 'Standard',
-      '478205': 'Premium',
-      '478206': 'Premium',
-      '478207': 'Cash Back',
-      '478208': 'Standard',
-      '478209': 'Premium',
-      '478210': 'Standard',
-      '478211': 'Premium',
-      '478212': 'Cash Back',
-      '478213': 'Premium',
-      '478214': 'Standard',
-      '478215': 'Premium',
-      '478216': 'Premium',
-      '478217': 'Standard',
-      '478218': 'Premium',
-      '478219': 'Cash Back',
-      '478220': 'Standard',
-      '478221': 'Premium',
-      '478222': 'Premium',
-      '478223': 'Standard',
-      '478224': 'Premium',
-      '478225': 'Cash Back',
-      '478226': 'Standard',
-      '478227': 'Premium',
-      '478228': 'Premium',
-      '478229': 'Standard',
-      '478230': 'Premium',
-      '478231': 'Premium',
-      '478232': 'Standard',
-      '478233': 'Premium',
-      '478234': 'Premium',
-      '478235': 'Standard',
-      '478236': 'Premium',
-      '478237': 'Premium',
-      '478238': 'Standard',
-      '478239': 'Premium',
-      '478240': 'Premium',
-      '478241': 'Standard',
-      '478242': 'Premium',
-      '478243': 'Premium',
-      '478244': 'Standard',
-      '478245': 'Premium',
-      '478246': 'Premium',
-      '478247': 'Standard',
-      '478248': 'Premium',
-      '478249': 'Premium',
-      '478250': 'Standard',
-      '478251': 'Premium',
-      '478252': 'Premium',
-      '478253': 'Standard',
-      '478254': 'Premium',
-      '478255': 'Premium',
-      '478256': 'Standard',
-      '478257': 'Premium',
-      '478258': 'Premium',
-      '478259': 'Standard',
-      '478260': 'Premium',
-      '478261': 'Premium',
-      '478262': 'Standard',
-      '478263': 'Premium',
-      '478264': 'Premium',
-      '478265': 'Standard',
-      '478266': 'Premium',
-      '478267': 'Premium',
-      '478268': 'Standard',
-      '478269': 'Premium',
-      '478270': 'Premium',
-      '478271': 'Standard',
-      '478272': 'Premium',
-      '478273': 'Premium',
-      '478274': 'Standard',
-      '478275': 'Premium',
-      '478276': 'Premium',
-      '478277': 'Standard',
-      '478278': 'Premium',
-      '478279': 'Premium',
-      '478280': 'Standard',
-      '478281': 'Premium',
-      '478282': 'Premium',
-      '478283': 'Standard',
-      '478284': 'Premium',
-      '478285': 'Premium',
-      '478286': 'Standard',
-      '478287': 'Premium',
-      '478288': 'Premium',
-      '478289': 'Standard',
-      '478290': 'Premium',
-      '478291': 'Premium',
-      '478292': 'Standard',
-      '478293': 'Premium',
-      '478294': 'Premium',
-      '478295': 'Standard',
-      '478296': 'Premium',
-      '478297': 'Premium',
-      '478298': 'Standard',
-      '478299': 'Premium',
-    };
-    return classes[bin] || (type === 'American Express' ? 'Premium' : 'Standard');
+    if (parseInt(expYear) < currentYear || (parseInt(expYear) === currentYear && parseInt(expMonth) < currentMonth)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
