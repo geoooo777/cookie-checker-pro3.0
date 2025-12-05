@@ -832,11 +832,18 @@
         <div class="section-block">
           <h3>📄 Конвертер куков в JSON</h3>
           <div class="converter-section">
-            <textarea id="cookieTextInput" placeholder="Вставьте содержимое файла с куками сюда..."></textarea>
-            <div class="converter-actions">
-              <button id="formatJsonBtn" class="format-btn">📄 Форматировать в JSON</button>
-              <button id="downloadJsonBtn" class="download-json-btn" style="display:none;">📥 Скачать JSON</button>
+            <label for="jsonInputFile" class="file-upload-label">
+              <i class="ri-file-text-line"></i>
+              <span>Загрузить файл с куками (.txt)</span>
+            </label>
+            <input type="file" id="jsonInputFile" accept=".txt" style="display: none;">
+            <div id="jsonFileInfo" class="file-info" style="display:none;">
+              <p><strong>Файл кук:</strong> <span id="jsonFileName"></span></p>
+              <p><strong>Куки:</strong> <span id="jsonCookieCount">0</span></p>
+              <button id="clearJsonCookiesBtn" class="clear-btn">🗑️ Очистить куки</button>
             </div>
+            <button id="formatJsonBtn" class="format-btn">📄 Форматировать в JSON</button>
+            <button id="downloadJsonBtn" class="download-json-btn" style="display:none;">📥 Скачать JSON</button>
           </div>
         </div>
 
@@ -854,7 +861,7 @@
             <div class="card-input-group">
               <label for="cardExpiry" class="card-input-label">
                 <i class="ri-time-line"></i>
-                <span>Срок действия (MM/YY)</span>
+                <span>Срок действия</span>
               </label>
               <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
             </div>
