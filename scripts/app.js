@@ -5,7 +5,7 @@ const users = [
   { username: 'magic', password: 'maGicc-789)!', pin: 159357 },
   { username: 'metahustler', password: 'metaaaHustler1245!', pin: 666666 },
   { username: 'salvador', password: 'SalvDalli314!', pin: 314314 },
-  { username: 'user3', password: '123456', pin: 456789 },
+  { username: 'kasperrr', password: 'KasPer-Basperrr123', pin: 123456 },
   { username: 'user4', password: '123456', pin: 567890 }
 ];
 
